@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog d'Assistance{% endblock %}
+
+{% block body %}
+   <h1>Conseils et Articles d'Assistance</h1>
+   <div class="articles">
+      {% for article in articles %}
+         <div class="article">
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.excerpt }}</p>
+            <a href="{{ path('app_article', {'id': article.id}) }}">Lire la suite</a>
+         </div>
+      {% else %}
+         <p>Aucun article disponible pour le moment.</p>
+      {% endfor %}
+   </div>
+{% endblock %}

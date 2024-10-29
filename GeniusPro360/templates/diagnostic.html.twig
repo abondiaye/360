@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Diagnostic Automatisé{% endblock %}
+
+{% block body %}
+   <h1>Diagnostic Automatisé</h1>
+   <p>Identifiez les problèmes de votre système avec notre outil intelligent.</p>
+   
+   <button onclick="startDiagnostic()">Lancer le diagnostic</button>
+
+   <div id="diagnostic-result">
+      <!-- Résultats du diagnostic seront affichés ici -->
+   </div>
+
+   <script>
+      function startDiagnostic() {
+         // Script pour lancer le diagnostic (à compléter avec des scripts JS)
+         document.getElementById('diagnostic-result').innerText = 'Analyse en cours...';
+      }
+   </script>
+{% endblock %}

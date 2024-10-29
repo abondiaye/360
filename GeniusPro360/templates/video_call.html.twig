@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appel Vidéo avec Assistance RA{% endblock %}
+
+{% block body %}
+   <h1>Assistance Vidéo avec Réalité Augmentée</h1>
+   <p>Montrez votre problème à un technicien en temps réel.</p>
+   
+   <div id="video-call-container">
+      <!-- Interface d'appel vidéo (exemple d'éléments de base) -->
+      <video id="user-video" autoplay></video>
+      <video id="technician-video" autoplay></video>
+      
+      <button onclick="startCall()">Lancer l'appel</button>
+   </div>
+
+   <script>
+      function startCall() {
+         // Code pour lancer l'appel vidéo (exemple, à compléter selon le besoin)
+      }
+   </script>
+{% endblock %}
