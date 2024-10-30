@@ -1,21 +1,197 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Diagnostic Page{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('build/diagnostic.css') }}">
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                transition: background-color 0.3s; /* Transition pour le changement de fond */
+            }
+            .light {
+                background-color: #f4f4f4; /* Couleur de fond clair */
+                color: #333; /* Couleur de texte clair */
+            }
+            .dark {
+                background-color: #333; /* Couleur de fond sombre */
+                color: #f4f4f4; /* Couleur de texte sombre */
+            }
+            .container {
+                display: grid;
+                gap: 20px;
+                padding: 20px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 90%;
+                max-width: 500px;
+                text-align: center;
+            }
+            h1, h2 {
+                margin-bottom: 20px;
+            }
+            .input-field {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            input[type="text"],
+            textarea {
+                border: none;
+                padding: 10px;
+                width: 100%;
+                border-radius: 1rem;
+                box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2), -0.2rem -0.2rem 0.5rem white;
+                margin-bottom: 10px;
+            }
+            .btn {
+                background-color: #ccc; /* Couleur gris clair */
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s, transform 0.3s;
+                box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
+            }
+            .btn:hover {
+                background-color: #aaa; /* Couleur gris plus foncé au survol */
+                transform: scale(1.05); /* Animation de survol */
+                box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
+            }
 
-{% block title %}Diagnostic Automatisé{% endblock %}
+            .btn:active {
+            background-color: #ccc; /* Couleur gris clair au clic */
+         }
 
-{% block body %}
-   <h1>Diagnostic Automatisé</h1>
-   <p>Identifiez les problèmes de votre système avec notre outil intelligent.</p>
-   
-   <button onclick="startDiagnostic()">Lancer le diagnostic</button>
+            .theme-selector {
+                margin-bottom: 20px;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body class="light"> <!-- Classe par défaut sur le body -->
+    {% block body %}
+    <div class="container">
+        <h1>Diagnostic à Distance</h1>
 
-   <div id="diagnostic-result">
-      <!-- Résultats du diagnostic seront affichés ici -->
-   </div>
+        <div class="theme-selector">
+            <label for="theme">Choisir le thème :</label>
+            <select id="theme" onchange="changeTheme()">
+                <option value="light">Clair</option>
+                <option value="dark">Sombre</option>
+            </select>
+        </div>
 
-   <script>
-      function startDiagnostic() {
-         // Script pour lancer le diagnostic (à compléter avec des scripts JS)
-         document.getElementById('diagnostic-result').innerText = 'Analyse en cours...';
-      }
-   </script>
-{% endblock %}
+        <form class="diagnostic-form">
+            <div class="input-field">
+                <input type="text" id="pc-number" placeholder="Numéro de PC" required pattern="\d{1,10}" />
+                <input type="text" class="form__input" placeholder="Entrez votre problème..." required />
+                <input type="text" id="company-name" placeholder="Nom de la société" required />
+                <input type="file" id="identity-doc" accept="application/pdf" required />
+            </div>
+            <button type="submit" class="btn" id="diagnosticBtn">Lancer le Diagnostic</button>
+            <button type="button" class="btn" id="cancel">Annuler</button>
+        </form>
+
+        <div class="ticket-form">
+            <h2>Créer un Ticket</h2>
+            <input type="text" id="ticketSubject" placeholder="Objet du ticket" required>
+            <textarea id="ticketDescription" placeholder="Décrivez votre problème..." required></textarea>
+            <button id="submitTicketBtn" class="btn">Soumettre le Ticket</button>
+        </div>
+
+        <div class="history">
+            <h2>Historique des Diagnostics</h2>
+            <ul id="diagnosticHistory"></ul>
+        </div>
+    </div>
+    {% endblock %}
+    
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script>
+            let diagnostics = []; // Pour stocker l'historique des diagnostics
+
+            // Fonction pour changer le thème
+            function changeTheme() {
+                const selectedTheme = document.getElementById('theme').value;
+                document.body.className = selectedTheme; // Applique la classe du thème au body
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.querySelector('.diagnostic-form');
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();  // Empêche l'envoi du formulaire
+                    const pcNumber = document.getElementById('pc-number').value;
+                    const problemDescription = document.querySelector('.form__input').value;
+                    const companyName = document.getElementById('company-name').value;
+                    const identityDoc = document.getElementById('identity-doc').files[0];
+
+                    // Validation du numéro de PC
+                    const pcNumberRegex = /^\d{1,10}$/; // Exemple : entre 1 et 10 chiffres
+                    if (!pcNumberRegex.test(pcNumber)) {
+                        alert('Le numéro de PC doit contenir entre 1 et 10 chiffres.');
+                        return;
+                    }
+
+                    // Validation de la pièce d'identité
+                    if (!identityDoc || identityDoc.type !== 'application/pdf') {
+                        alert('Veuillez télécharger une pièce d\'identité au format PDF.');
+                        return;
+                    }
+
+                    // Ajouter le diagnostic à l'historique
+                    diagnostics.push({ pcNumber, problemDescription, companyName });
+                    updateHistory();
+
+                    alert(`Diagnostic démarré pour le PC numéro : ${pcNumber}\nProblème: ${problemDescription}\nSociété: ${companyName}`);
+                });
+
+                // Événement pour le bouton d'annulation
+                document.getElementById('cancel').addEventListener('click', () => {
+                    document.getElementById('pc-number').value = ''; // Réinitialise le champ de saisie
+                    document.querySelector('.form__input').value = ''; // Réinitialise la description du problème
+                    document.getElementById('company-name').value = ''; // Réinitialise le nom de la société
+                    document.getElementById('identity-doc').value = ''; // Réinitialise le fichier
+                });
+
+                // Événement pour le bouton de soumission de ticket
+                document.getElementById('submitTicketBtn').addEventListener('click', function() {
+                    const subject = document.getElementById('ticketSubject').value;
+                    const description = document.getElementById('ticketDescription').value;
+                    
+                    if (subject && description) {
+                        // Logique pour envoyer le ticket au serveur
+                        alert(`Ticket soumis : ${subject}`);
+                    } else {
+                        alert('Veuillez remplir tous les champs.');
+                    }
+                });
+            });
+
+            function updateHistory() {
+                const historyList = document.getElementById('diagnosticHistory');
+                historyList.innerHTML = ''; // Vider la liste avant de mettre à jour
+
+                diagnostics.forEach((diag, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `Diagnostic ${index + 1}: PC ${diag.pcNumber} - ${diag.problemDescription} (Société: ${diag.companyName})`;
+                    historyList.appendChild(li);
+                });
+            }
+        </script>
+    {% endblock %}
+</body>
+</html>

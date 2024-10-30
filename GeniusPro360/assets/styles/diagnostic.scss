@@ -1,0 +1,67 @@
+:root {
+    --light-grey: #f0f0f0;
+    --white: #ffffff;
+    --grey-light-2: #d3d3d3;
+}
+
+body {
+    background-color: var(--light-grey);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: var(--white);
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem var(--grey-light-2);
+    padding: 2rem;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+.diagnostic-form {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group label {
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--grey-light-2);
+    border-radius: 0.5rem;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    background-color: var(--grey-light-2);
+    border: none;
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #c0c0c0;
+}

@@ -1,19 +1,46 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic à Distance - GeniusPro 360°</title>
+    <link rel="stylesheet" href="{{ asset('build/diagnostic.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Diagnostic à Distance</h1>
+        <img src="logo.png" alt="GeniusPro 360°" />
+    </header>
+    <main class="diagnostic-form">
+        <form id="diagnosticForm">
+            <label for="problemDescription">Décrivez votre problème :</label>
+            <textarea id="problemDescription" required></textarea>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+            <label for="problemType">Type de problème :</label>
+            <select id="problemType">
+                <option value="software">Logiciel</option>
+                <option value="hardware">Matériel</option>
+                <option value="internet">Connexion Internet</option>
+            </select>
+
+            <button type="submit">Commencer le Diagnostic</button>
+        </form>
+        <div class="progress">
+            <div class="step active">Étape 1</div>
+            <div class="step">Étape 2</div>
+            <div class="step">Étape 3</div>
+        </div>
+        <div id="animation"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 GeniusPro 360°. Tous droits réservés.</p>
+        <a href="#faq">FAQ</a>
+    </footer>
+
+    <script>
+        // Animation GSAP exemple
+        gsap.from(".step", {duration: 0.5, opacity: 0, stagger: 0.2});
+    </script>
+</body>
 </html>
