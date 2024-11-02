@@ -1,18 +1,25 @@
-{% extends 'base.html.twig' %}
+{# templates/blog/index.html.twig #}
 
-{% block title %}Blog d'Assistance{% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Articles de Blog</h1>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h2>{{ article.title }}</h2>
+                <p>{{ article.content }}</p>
+            </li>
+        {% else %}
+            <li>Aucun article trouvé.</li>
+        {% endfor %}
+    </ul>
+     <!-- Bouton retour vers la page d'accueil -->
+        <a href="{{ path('app_home') }}" class="btn">Retour</a>
 
-{% block body %}
-   <h1>Conseils et Articles d'Assistance</h1>
-   <div class="articles">
-      {% for article in articles %}
-         <div class="article">
-            <h2>{{ article.title }}</h2>
-            <p>{{ article.excerpt }}</p>
-            <a href="{{ path('app_article', {'id': article.id}) }}">Lire la suite</a>
-         </div>
-      {% else %}
-         <p>Aucun article disponible pour le moment.</p>
-      {% endfor %}
-   </div>
-{% endblock %}
+</body>
+</html>

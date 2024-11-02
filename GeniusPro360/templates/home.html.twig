@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeniusPro 360°</title>
+    <title>GeniusPro 360° - Assistance</title>
     <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
@@ -17,7 +17,8 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-        }
+}
+
         #vanta-bg {
             position: absolute;
             top: 0;
@@ -33,28 +34,28 @@
             z-index: 1;
             color: black;
             text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.27); /* Fond légèrement transparent */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 80%; /* Largeur maximale du conteneur */
+            max-height: 80vh; /* Hauteur maximale du conteneur pour éviter qu'il soit trop haut */
+            overflow-y: auto; /* Ajoute un défilement si le contenu dépasse la hauteur */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centre le contenu verticalement */
         }
 
-        /* Style du texte du conteneur en dégradé gris métallique */
-        .container h1,
-        .container p {
-            font-size: 2em;
+        /* Style du texte du conteneur */
+        .container h1 {
+            font-size: 2.5em;
             font-weight: bold;
-            background: white;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        /* Style du texte du conteneur en dégradé doré métallique */
-        .container h1,
         .container p {
-            font-size: 2em;
-            font-weight: bold;
-        background: #ccd0d4
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.5em;
+            margin: 10px 0 20px;
         }
-
 
         /* Style du logo */
         .logo {
@@ -67,49 +68,78 @@
         button {
             align-self: center;
             border: solid 0.625em transparent;
-            padding: 3px;
-            width: 6.25em;
-            height: 6.25em;
-            border-radius: 1.09375em;
-            font: 2.5em/5em Satisfy, cursive;
-            color: #white;
+            padding: 22px;
+            width: 150px;
+            height: 85px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            color: white;
             text-shadow: 0 0 1px currentColor, 0 0 2px dimgrey;
             cursor: pointer;
-            background: conic-gradient(#edc800, #e3b600, #f3cf00, #ffe800, #ffe900, #ffeb00, #ffe000, #ebc500, #e0b100, #f1cc00, #fcdc00, #ffe500, #fad900, #eec200, #e7b900, #f7d300, #ffe800, #ffe300, #f5d100, #e6b900, #e3b600, #f4d000, #ffe400, #ebc600, #e3b600, #f6d500, #ffe900, #ffe90a, #edc800) content-box, linear-gradient(#f6d600, #f6d600) padding-box, radial-gradient(rgba(120, 120, 120, 0.9), rgba(120, 120, 120, 0) 70%) 50% bottom/80% 0.46875em no-repeat border-box;
+            background: conic-gradient(#edc800, #e3b600, #f3cf00, #ffe800, #ffe900, #ffeb00, #ffe000, #ebc500, #e0b100, #f1cc00, #fcdc00, #ffe500, #fad900, #eec200, #e7b900, #f7d300, #ffe800, #ffe300, #f5d100, #e6b900, #e3b600, #f4d000, #ffe400, #ebc600, #e3b600, #f6d500, #ffe900, #ffe90a, #edc800);
             margin: 10px;
+            transition: transform 0.3s, background-color 0.3s;
         }
 
-        /* Style du texte en dégradé pour les boutons */
-        button span {
-            background: linear-gradient(45deg, #D3D3D3, #A9A9A9, #808080, #696969, #4F4F4F);            
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        button:hover {
+            transform: scale(1.05);
         }
 
-        button:nth-child(1) {
-            box-shadow: inset 0 0 0 1px #eedc00, inset 0 1px 2px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+        /* Styles des sections FAQ et contact */
+        .faq, .contact-info {
+            margin: 20px 0;
+            text-align: left;
         }
 
-            .text-assistance {
-        color: #FFD700;
+        .faq-item {
+            margin-bottom: 15px;
         }
 
-        .text-diagnostic {
-            color: #A9A9A9;
+        .faq-item h3 {
+            cursor: pointer;
+            margin: 0;
         }
 
-        .text-blog {
-            color: #696969;
+        .faq-item p {
+            display: none;
+            margin: 5px 0 0;
         }
 
-            
-        </style>
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            background-color: #4CAF50; /* Vert */
+            border: none;
+            color: white;
+        }
+
+        /* Style pour le bouton de retour */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-
-
-
-
 
     <div id="vanta-bg"></div>
 
@@ -119,11 +149,43 @@
         <h1>Bienvenue sur GeniusPro 360°</h1>
         <p>Une assistance informatique en temps réel avec réalité augmentée.</p>
 
-    <!-- Boutons stylisés autour du logo -->
-        <button onclick="window.location.href='{{ path('app_video_call') }}'"><span>Assistance en RA</span></button>
-        <button onclick="window.location.href='{{ path('app_diagnostic') }}'"><span>Diagnostic</span></button>
-        <button onclick="window.location.href='{{ path('app_blog') }}'"><span>Blog</span></button>
+       
+        <!-- Boutons stylisés -->
+        <button onclick="window.location.href='{{ path('app_video_call') }}'">Assistance en RA</button>
+        <button onclick="window.location.href='{{ path('app_diagnostic') }}'">Diagnostic</button>
+        <button onclick="window.location.href='{{ path('blog_index') }}'">Blog</button>
 
+        <!-- Lien vers les articles de blog -->
+        <a href="{{ path('blog_index') }}">Voir les articles de blog</a>
+
+        <!-- Section FAQ -->
+        <h2>Questions Fréquemment Posées (FAQ)</h2>
+        <div class="faq">
+            <div class="faq-item">
+                <h3>Comment puis-je contacter le support ?</h3>
+                <p>Vous pouvez nous contacter par email à <strong>support@example.com</strong> ou par téléphone au <strong>0123 456 789</strong>.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Quels types de problèmes peuvent être résolus ?</h3>
+                <p>Nous aidons avec une variété de problèmes techniques, y compris des problèmes de connexion, de configuration, et d'utilisation de notre plateforme.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Quels sont les horaires de support ?</h3>
+                <p>Notre équipe de support est disponible du lundi au vendredi, de 9h00 à 17h00.</p>
+            </div>
+        </div>
+
+        <!-- Section Contact -->
+        <h2>Contactez-nous</h2>
+        <div class="contact-info">
+            <p>Si vous avez besoin d'assistance, veuillez remplir le formulaire ci-dessous :</p>
+            <form class="contact-form" action="{{ path('app_contact') }}" method="post">
+                <input type="text" name="name" placeholder="Votre nom" required />
+                <input type="email" name="email" placeholder="Votre email" required />
+                <textarea name="message" placeholder="Votre message..." required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
     </div>
 
     <!-- Scripts pour l'animation Vanta -->
@@ -141,6 +203,14 @@
                 blurFactor: 0.6,
                 speed: 2.0,
                 zoom: 1.0
+            });
+        });
+
+        // Toggle FAQ answers
+        document.querySelectorAll('.faq-item h3').forEach(item => {
+            item.addEventListener('click', () => {
+                const content = item.nextElementSibling;
+                content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
             });
         });
     </script>

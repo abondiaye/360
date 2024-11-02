@@ -9,8 +9,8 @@
 </head>
 <body>
     <header>
-        <h1>Diagnostic à Distance</h1>
-        <img src="logo.png" alt="GeniusPro 360°" />
+        <h1>Assistance en RA</h1>
+        <img src="images/logo.png" alt="GeniusPro 360°" />
     </header>
     <main class="diagnostic-form">
         <form id="diagnosticForm">
@@ -32,6 +32,9 @@
             <div class="step">Étape 3</div>
         </div>
         <div id="animation"></div>
+         <!-- Bouton retour vers la page d'accueil -->
+        <a href="{{ path('app_home') }}" class="btn">Retour</a>
+
     </main>
     <footer>
         <p>&copy; 2024 GeniusPro 360°. Tous droits réservés.</p>
@@ -39,7 +42,7 @@
     </footer>
 
     <script>
-        // Animation GSAP exemple
+        // Animation GSAP //
         gsap.from(".step", {duration: 0.5, opacity: 0, stagger: 0.2});
     </script>
 </body>

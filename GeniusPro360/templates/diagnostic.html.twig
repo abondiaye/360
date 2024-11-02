@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Diagnostic Page{% endblock %}</title>
+    <title>{% block title %}Diagnostic {% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -16,15 +16,15 @@
                 min-height: 100vh;
                 font-family: Arial, sans-serif;
                 margin: 0;
-                transition: background-color 0.3s; /* Transition pour le changement de fond */
+                transition: background-color 0.3s;
             }
             .light {
-                background-color: #f4f4f4; /* Couleur de fond clair */
-                color: #333; /* Couleur de texte clair */
+                background-color: #f4f4f4;
+                color: #333;
             }
             .dark {
-                background-color: #333; /* Couleur de fond sombre */
-                color: #f4f4f4; /* Couleur de texte sombre */
+                background-color: #333;
+                color: #f4f4f4;
             }
             .container {
                 display: grid;
@@ -41,6 +41,7 @@
                 margin-bottom: 20px;
             }
             .input-field {
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -51,36 +52,35 @@
                 padding: 10px;
                 width: 100%;
                 border-radius: 1rem;
-                box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2), -0.2rem -0.2rem 0.5rem white;
                 margin-bottom: 10px;
             }
             .btn {
-                background-color: #ccc; /* Couleur gris clair */
+                background-color: #ccc;
                 color: white;
                 padding: 10px 15px;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
                 transition: background 0.3s, transform 0.3s;
-                box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
             }
             .btn:hover {
-                background-color: #aaa; /* Couleur gris plus foncé au survol */
-                transform: scale(1.05); /* Animation de survol */
-                box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), -0.4rem -0.4rem 0.8rem var(--white);
+                background-color: #aaa;
+                transform: scale(1.05);
             }
-
-            .btn:active {
-            background-color: #ccc; /* Couleur gris clair au clic */
-         }
-
             .theme-selector {
                 margin-bottom: 20px;
+            }
+            .error-message {
+                color: #e74c3c;
+                font-size: 0.85rem;
+                text-align: left;
+                width: 100%;
+                display: none; /* Masqué par défaut */
             }
         </style>
     {% endblock %}
 </head>
-<body class="light"> <!-- Classe par défaut sur le body -->
+<body class="light">
     {% block body %}
     <div class="container">
         <h1>Diagnostic à Distance</h1>
@@ -95,10 +95,15 @@
 
         <form class="diagnostic-form">
             <div class="input-field">
-                <input type="text" id="pc-number" placeholder="Numéro de PC" required pattern="\d{1,10}" />
-                <input type="text" class="form__input" placeholder="Entrez votre problème..." required />
-                <input type="text" id="company-name" placeholder="Nom de la société" required />
-                <input type="file" id="identity-doc" accept="application/pdf" required />
+                <input type="text" id="pc-number" placeholder="Numéro de PC" required pattern="\d{1,10}" aria-label="Numéro de PC" />
+                <span class="error-message" id="pc-error">Le numéro de PC doit contenir entre 1 et 10 chiffres.</span>
+                
+                <input type="text" class="form__input" placeholder="Entrez votre problème..." required aria-label="Description du problème" />
+                
+                <input type="text" id="company-name" placeholder="Nom de la société" required aria-label="Nom de la société" />
+                
+                <input type="file" id="identity-doc" accept="application/pdf" required aria-label="Télécharger une pièce d'identité en format PDF" />
+                <span class="error-message" id="file-error">Veuillez télécharger une pièce d'identité au format PDF.</span>
             </div>
             <button type="submit" class="btn" id="diagnosticBtn">Lancer le Diagnostic</button>
             <button type="button" class="btn" id="cancel">Annuler</button>
@@ -106,92 +111,92 @@
 
         <div class="ticket-form">
             <h2>Créer un Ticket</h2>
-            <input type="text" id="ticketSubject" placeholder="Objet du ticket" required>
-            <textarea id="ticketDescription" placeholder="Décrivez votre problème..." required></textarea>
+            <input type="text" id="ticketSubject" placeholder="Objet du ticket" required aria-label="Objet du ticket">
+            <textarea id="ticketDescription" placeholder="Décrivez votre problème..." required aria-label="Description du problème"></textarea>
             <button id="submitTicketBtn" class="btn">Soumettre le Ticket</button>
         </div>
 
         <div class="history">
             <h2>Historique des Diagnostics</h2>
             <ul id="diagnosticHistory"></ul>
+             <!-- Bouton retour vers la page d'accueil -->
+        <a href="{{ path('app_home') }}" class="btn">Retour</a>
+
         </div>
     </div>
+    
     {% endblock %}
     
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        <script>
-            let diagnostics = []; // Pour stocker l'historique des diagnostics
+    {{ encore_entry_script_tags('app') }}
+    <script src="{{ asset('js/diagnostic.js') }}"></script>
+    <script>
+        let diagnostics = [];
 
-            // Fonction pour changer le thème
-            function changeTheme() {
-                const selectedTheme = document.getElementById('theme').value;
-                document.body.className = selectedTheme; // Applique la classe du thème au body
-            }
+        function changeTheme() {
+            const selectedTheme = document.getElementById('theme').value;
+            document.body.className = selectedTheme;
+        }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const form = document.querySelector('.diagnostic-form');
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.diagnostic-form');
+            const pcError = document.getElementById('pc-error');
+            const fileError = document.getElementById('file-error');
 
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();  // Empêche l'envoi du formulaire
-                    const pcNumber = document.getElementById('pc-number').value;
-                    const problemDescription = document.querySelector('.form__input').value;
-                    const companyName = document.getElementById('company-name').value;
-                    const identityDoc = document.getElementById('identity-doc').files[0];
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
 
-                    // Validation du numéro de PC
-                    const pcNumberRegex = /^\d{1,10}$/; // Exemple : entre 1 et 10 chiffres
-                    if (!pcNumberRegex.test(pcNumber)) {
-                        alert('Le numéro de PC doit contenir entre 1 et 10 chiffres.');
-                        return;
-                    }
+                const pcNumber = document.getElementById('pc-number').value;
+                const identityDoc = document.getElementById('identity-doc').files[0];
 
-                    // Validation de la pièce d'identité
-                    if (!identityDoc || identityDoc.type !== 'application/pdf') {
-                        alert('Veuillez télécharger une pièce d\'identité au format PDF.');
-                        return;
-                    }
+                pcError.style.display = 'none';
+                fileError.style.display = 'none';
 
-                    // Ajouter le diagnostic à l'historique
-                    diagnostics.push({ pcNumber, problemDescription, companyName });
-                    updateHistory();
+                if (!/^\d{1,10}$/.test(pcNumber)) {
+                    pcError.style.display = 'block';
+                    return;
+                }
 
-                    alert(`Diagnostic démarré pour le PC numéro : ${pcNumber}\nProblème: ${problemDescription}\nSociété: ${companyName}`);
-                });
+                if (!identityDoc || identityDoc.type !== 'application/pdf') {
+                    fileError.style.display = 'block';
+                    return;
+                }
 
-                // Événement pour le bouton d'annulation
-                document.getElementById('cancel').addEventListener('click', () => {
-                    document.getElementById('pc-number').value = ''; // Réinitialise le champ de saisie
-                    document.querySelector('.form__input').value = ''; // Réinitialise la description du problème
-                    document.getElementById('company-name').value = ''; // Réinitialise le nom de la société
-                    document.getElementById('identity-doc').value = ''; // Réinitialise le fichier
-                });
-
-                // Événement pour le bouton de soumission de ticket
-                document.getElementById('submitTicketBtn').addEventListener('click', function() {
-                    const subject = document.getElementById('ticketSubject').value;
-                    const description = document.getElementById('ticketDescription').value;
-                    
-                    if (subject && description) {
-                        // Logique pour envoyer le ticket au serveur
-                        alert(`Ticket soumis : ${subject}`);
-                    } else {
-                        alert('Veuillez remplir tous les champs.');
-                    }
-                });
+                diagnostics.push({ pcNumber });
+                updateHistory();
+                alert(`Diagnostic démarré pour le PC numéro : ${pcNumber}`);
             });
 
-            function updateHistory() {
-                const historyList = document.getElementById('diagnosticHistory');
-                historyList.innerHTML = ''; // Vider la liste avant de mettre à jour
+            document.getElementById('cancel').addEventListener('click', () => {
+                document.getElementById('pc-number').value = '';
+                document.querySelector('.form__input').value = '';
+                document.getElementById('company-name').value = '';
+                document.getElementById('identity-doc').value = '';
+            });
 
-                diagnostics.forEach((diag, index) => {
-                    const li = document.createElement('li');
-                    li.textContent = `Diagnostic ${index + 1}: PC ${diag.pcNumber} - ${diag.problemDescription} (Société: ${diag.companyName})`;
-                    historyList.appendChild(li);
-                });
-            }
-        </script>
+            document.getElementById('submitTicketBtn').addEventListener('click', function() {
+                const subject = document.getElementById('ticketSubject').value;
+                const description = document.getElementById('ticketDescription').value;
+
+                if (subject && description) {
+                    alert(`Ticket soumis : ${subject}`);
+                } else {
+                    alert('Veuillez remplir tous les champs.');
+                }
+            });
+        });
+
+        function updateHistory() {
+            const historyList = document.getElementById('diagnosticHistory');
+            historyList.innerHTML = '';
+            diagnostics.forEach((diag, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Diagnostic ${index + 1}: PC ${diag.pcNumber}`;
+                historyList.appendChild(li);
+            });
+        }
+    </script>
+        <a href="{{ path('blog_index') }}">Voir les articles de blog</a>
     {% endblock %}
 </body>
 </html>

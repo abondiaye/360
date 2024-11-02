@@ -1,68 +1,40 @@
 <?php
-// src/Entity/AutomatedDiagnostic.php
+// src/Controller/DiagnosticController.php
 
-namespace App\Entity;
+namespace App\Controller;
 
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AutomatedDiagnostic;
+use App\Entity\SupportCall;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
-#[ORM\Entity()]
-class AutomatedDiagnostic
+class DiagnosticController extends AbstractController
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private int $id;
-
-    #[ORM\OneToOne(targetEntity: SupportCall::class)]
-    private SupportCall $supportCall;
-
-    #[ORM\Column(type: 'text')]
-    private string $diagnosticResult;
-
-    #[ORM\Column(type: 'datetime')]
-    private \DateTime $createdAt;
-
-    // Getters et setters
-
-    public function getId(): ?int
+    #[Route('/api/diagnostic', name: 'api_diagnostic', methods: ['POST'])]
+    public function saveDiagnostic(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        return $this->id;
-    }
+        $data = json_decode($request->getContent(), true);
 
-    public function getDiagnosticResult(): ?string
-    {
-        return $this->diagnosticResult;
-    }
+        if (isset($data['pcNumber'], $data['problemDescription'], $data['companyName'])) {
+            $diagnostic = new AutomatedDiagnostic();
+            $diagnostic->setDiagnosticResult($data['problemDescription']);
+            $diagnostic->setCreatedAt(new \DateTime());
 
-    public function setDiagnosticResult(string $diagnosticResult): static
-    {
-        $this->diagnosticResult = $diagnosticResult;
+            // Associer à un appel de support si nécessaire
+            $supportCall = new SupportCall();
+            // On peut ici associer des données au support call
+            $diagnostic->setSupportCall($supportCall);
 
-        return $this;
-    }
+            $entityManager->persist($supportCall);
+            $entityManager->persist($diagnostic);
+            $entityManager->flush();
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
+            return new JsonResponse(['status' => 'Diagnostic saved successfully'], 201);
+        }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getSupportCall(): ?SupportCall
-    {
-        return $this->supportCall;
-    }
-
-    public function setSupportCall(?SupportCall $supportCall): static
-    {
-        $this->supportCall = $supportCall;
-
-        return $this;
+        return new JsonResponse(['error' => 'Invalid data'], 400);
     }
 }

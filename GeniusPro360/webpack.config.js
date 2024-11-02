@@ -25,7 +25,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // Notifications de build
-    .enableBuildNotifications()
-;
+    .enableBuildNotifications();
+
+    
 
 module.exports = Encore.getWebpackConfig();
