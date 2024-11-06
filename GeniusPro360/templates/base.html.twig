@@ -27,7 +27,7 @@
     	<span id="a74">
         	<b class="a741">30/</b>
             <b class="a742">06/</b>
-            <b class="a743">2012</b>
+            <b class="a743">2024</b>
         </span>        
         <span id="a76">CSS animation</span>
     </div>
@@ -60,15 +60,15 @@
     <div id="figure">
     
         <div id="a7">
-            <span id="a71">paoock prod.</span>   
+            <span id="a71">GeniusPro360°</span>   
             <span id="a73">
                 <b class="a731">19</b>
                 <b class="a732">29</b>
             </span>
             <span id="a74">
-                <b class="a741">30/</b>
-                <b class="a742">06/</b>
-                <b class="a743">2012</b>
+                <b class="a741">5/</b>
+                <b class="a742">11/</b>
+                <b class="a743">2024</b>
             </span>        
             <span id="a76">CSS animation</span>
         </div>
@@ -125,6 +125,27 @@
                 <option value="hardware">Matériel</option>
                 <option value="internet">Connexion Internet</option>
             </select>
+            <div id="diagnostic-container">
+    <div class="question-step" id="step1">
+        <p>Votre ordinateur ne s'allume-t-il pas ?</p>
+        <button onclick="nextQuestion(2)">Oui</button>
+        <button onclick="nextQuestion(3)">Non</button>
+    </div>
+    <div class="question-step" id="step2" style="display: none;">
+        <p>Voyez-vous un voyant lumineux ?</p>
+        <button onclick="nextQuestion(4)">Oui</button>
+        <button onclick="nextQuestion(5)">Non</button>
+    </div>
+    <div class="question-step" id="step3" style="display: none;">
+        <p>Y a-t-il un bruit anormal ?</p>
+        <button onclick="showResult('Vérifiez les ventilateurs')">Oui</button>
+        <button onclick="showResult('Tout semble normal')">Non</button>
+    </div>
+    <div id="result" style="display: none;">
+        <p id="result-text"></p>
+    </div>
+</div>
+
 
             <button type="submit">Commencer le Diagnostic</button>
         </form>
@@ -135,60 +156,57 @@
             <div class="step">Étape 3 <span class="status-indicator"></span></div>
         </div>
         <div class="screen">
+
+
 <section class="buttonGroup">
-  <h2>GenuisPro360°</h2>
-  <button value="logiciel"></button>
-  <button value="Materiel"></button>
-  <button value="Conexion Internet"></button>
-  <button value="Booster Rockets"></button>
+  <h2>GeniusPro 360° - Diagnostic</h2>
+  <button value="logiciel">Problème Logiciel</button>
+  <button value="materiel">Problème Matériel</button>
+  <button value="connexion_internet">Problème de Connexion</button>
+  <button value="performances">Amélioration des Performances</button>
   <section class="setButtons">
-    <button value="Destroy"></button>
-    <button value="Deploy"></button>
+    <button value="réparer">Réparer</button>
+    <button value="diagnostiquer">Diagnostiquer</button>
   </section>
-  <button value="Retrograde Torpedoes"></button>
-  <button value="Science Canon"></button>
+  <button value="retour">Retour</button>
+  <button value="secourir">Assistance Sécurisée</button>
 </section>
 
 <section class="buttonGroup">
-  <h2>MEDIA</h2>
+  <h2>Média d'Assistance</h2>
   <section class="imageDisplay">
-   <div class="aspect">
-     
-    <iframe id="iframeVideo" width="100%" height="100%" src="https://www.youtube.com/embed/pNqfq-R2XFk?rel=0&amp;autoplay=0&showinfo=0&controls=0" frameborder="0" allowfullscreen='false'></iframe>
+    <div class="aspect">
+      <iframe id="iframeVideo" width="100%" height="100%" src="https://www.youtube.com/embed/pNqfq-R2XFk?rel=0&amp;autoplay=0&showinfo=0&controls=0" frameborder="0" allowfullscreen='false'></iframe>
     </div>
   </section>
-   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet est nisl. Mauris euismod vel quam eu tincidunt. Sed dapibus justo id dapibus tempor. Pellentesque a libero sed risus congue ultrices. Quisque at congue massa. Duis feugiat ligula non nisi semper tempus. Duis blandit lacus sed diam blandit, id faucibus nunc viverra. Morbi consequat consequat facilisis. Sed in felis vitae nibh venenatis finibus sed et dolor. Sed vulputate molestie est ac tristique. Vestibulum et aliquam velit, in convallis nisl. Vivamus pellentesque venenatis urna eget suscipit.
-<hr />     
-Sed rhoncus a leo congue sollicitudin. Fusce risus tortor, rutrum id egestas at, elementum in dui. Fusce bibendum purus eu turpis vestibulum, eget aliquet ante pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce egestas, mauris eu vehicula placerat, lacus mi hendrerit lacus, ac rhoncus arcu purus eget odio. Aliquam commodo mattis lorem vitae porttitor.</p>
+  <p>Bienvenue sur GeniusPro 360°. Grâce à notre technologie de pointe, nous vous proposons un diagnostic complet pour résoudre vos problèmes informatiques à distance. Vous pouvez rapidement identifier des problèmes de matériel, de logiciels, ou de connexion Internet. Nos outils de diagnostic sont conçus pour vous guider à travers chaque étape avec des recommandations personnalisées. Si vous avez besoin d'une assistance supplémentaire, notre équipe de techniciens est prête à intervenir de manière sécurisée et efficace.</p>
+  <hr />
+  <p>Nous mettons également l'accent sur la sécurité de vos données. Notre plateforme utilise des protocoles de sécurité avancés pour protéger votre vie privée et garantir que toutes les informations échangées durant l'assistance restent confidentielles. Nous recommandons toujours de procéder à des sauvegardes régulières et d'effectuer des analyses de sécurité pour éviter les vulnérabilités potentielles.</p>
 </section>
-  
+
 <section class="buttonGroup">
-  <h1>Scanning</h2>
+  <h1>Analyse de Sécurité</h1>
   <div class="visual1">
+    <!-- Graphiques ou animations de sécurité ici -->
   </div>
   
-  <div class="visual2">
-  </div>
+ 
   
   <section class="setButtons">
-    <button value="1"></button>
-    <button value="2"></button>
-    <button value="3"></button>
-    <button value="4"></button>
-    <button value="x"></button>
-    <button value="x"></button>
-    <button value="x"></button>
-    <button value="x"></button>
-    <button value="x"></button>
-    <button value="x"></button>
+    <button value="analyse_vulnérabilités">Analyser des vulnérabilités</button>
+    <button value="réparer_virus">Supprimé virus</button>
+    <button value="mettre_a_jour">Mettre à jour les logiciels</button>
+    <button value="nettoyage">Nettoyer les caches</button>
+    
   </section>
   
   <section>
-   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet est nisl. Mauris euismod vel quam eu tincidunt. Sed dapibus justo id dapibus tempor. Pellentesque a libero sed risus congue ultrices. Quisque at congue massa. Duis feugiat ligula non nisi semper tempus. Duis blandit lacus sed diam blandit, id faucibus nunc viverra. Morbi consequat consequat facilisis. Sed in felis vitae nibh venenatis finibus sed et dolor. Sed vulputate molestie est ac tristique. Vestibulum et aliquam velit, in convallis nisl. Vivamus pellentesque venenatis urna eget suscipit.
-<hr />     
-Sed rhoncus a leo congue sollicitudin. Fusce risus tortor, rutrum id egestas at, elementum in dui. Fusce bibendum purus eu turpis vestibulum, eget aliquet ante pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce egestas, mauris eu vehicula placerat, lacus mi hendrerit lacus, ac rhoncus arcu purus eget odio. Aliquam commodo mattis lorem vitae porttitor.</p>
+   <p>Nous analysons chaque partie de votre système pour détecter des vulnérabilités de sécurité potentielles. Les mises à jour logicielles et les correctifs sont essentiels pour maintenir un environnement sécurisé. GeniusPro 360° vous guide à travers des étapes simples pour protéger votre appareil contre les menaces extérieures, telles que les virus, les malwares et autres attaques informatiques.</p>
+   <hr />     
+   <p>Si des risques sont détectés, nous vous fournirons une série d'actions à entreprendre pour sécuriser vos systèmes et empêcher toute tentative d'intrusion. En cas de doute, notre équipe de support technique est disponible pour intervenir et effectuer un diagnostic plus poussé. La sécurité de vos données est notre priorité absolue.</p>
   </section>
 </section>
+
 
 </div>
 
@@ -197,12 +215,13 @@ Sed rhoncus a leo congue sollicitudin. Fusce risus tortor, rutrum id egestas at,
         <a href="{{ path('app_home') }}" class="btn">Retour</a>
     </main>
 
+    
+    <script src="{{ asset('build/diagnostic.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7O2l4LjmnzrIO4Ep4AOW5XV9uE8o+Pjd/9x" crossorigin="anonymous"></script>
     <footer>
         <p>&copy; 2024 GeniusPro 360°. Tous droits réservés.</p>
         <a href="#faq">FAQ</a>
     </footer>
 
-    <script src="{{ asset('build/diagnostic.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7O2l4LjmnzrIO4Ep4AOW5XV9uE8o+Pjd/9x" crossorigin="anonymous"></script>
 </body>
 </html>
