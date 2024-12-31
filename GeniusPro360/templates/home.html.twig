@@ -1,915 +1,101 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeniusPro 360° - Assistance</title>
-    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
+    <title>{% block title %}GeniusPro360 - Assistance et Diagnostic{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <style>
-        <canvas id='c'></canvas>
-
-        serif;
-    padding: 0;
-    margin: 0;
-    background-color: #222;
-    overflow: hidden;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-         -o-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
 
 
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-        /* Fond d'écran avec Vanta */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .neon {
-            color: #fff;
-            text-shadow:
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #fff,
-                0 0 40px rgba(255, 0, 0, 0.63),
-                0 0 80px #0ff,
-                0 0 90px #0ff,
-                0 0 100px #0ff,
-                0 0 150px #0ff;
-        }
-
-
-/* general styling */
-:root {
-  font-size: calc(1vw + 1vh + 1.5vmin);
-}
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Permet de rapprocher le conteneur du haut */
-    flex-direction: column;
-}
-
-.container {
-  margin: 0 auto;
-}
-
-body {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #010a00;
-  background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-family: -apple-system, 
-    BlinkMacSystemFont, 
-    "Segoe UI", 
-    Roboto, 
-    Oxygen-Sans, 
-    Ubuntu, 
-    Cantarell, 
-    "Helvetica Neue", 
-    sans-serif;
-  font-size: 1rem;
-}
-
-h1 {
-  font-weight: 400;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-        #vanta-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Conteneur principal */
-        .container {
-    margin-top: 50px; /* Ajustez la hauteur souhaitée */
-    margin-bottom: 100px; /* Espace supplémentaire en bas */
-    position: relative;
-    z-index: 1;
-    color: black;
-    text-align: center;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.27);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 45%;
-    max-height: 80vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-        /* Style du texte du conteneur */
-        .container h1 {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-
-        .container p {
-            font-size: 1.5em;
-            margin: 10px 0 20px;
-            
-        }
-
-        /* Style du logo */
-        .logo {
-            max-width: 200px;
-            width: 50%;
-            margin-bottom: 20px;
-        }
-
-        /* Style des boutons */
-        button {
-            align-self: center;
-            text-align: center;
-            grid-template-columns: 120px 120px 120px;
-            border: solid 0.625em transparent;
-            padding: 2px;
-            width: 300px;
-            height: 200px;
-            border-radius: 10px;
-            font-size: 1.2em;
-            color: white;
-            text-shadow: 0 0 1px currentColor, 0 0 2px dimgrey;
-            cursor: pointer;
-            background: conic-gradient(#edc800, #e3b600, #f3cf00, #ffe800, #ffe900, #ffeb00, #ffe000, #ebc500, #e0b100, #f1cc00, #fcdc00, #ffe500, #fad900, #eec200, #e7b900, #f7d300, #ffe800, #ffe300, #f5d100, #e6b900, #e3b600, #f4d000, #ffe400, #ebc600, #e3b600, #f6d500, #ffe900, #ffe90a, #edc800);
-            margin: 10px;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-
-        /* Conteneur des boutons pour un alignement côte à côte */
-        .button-container {
-            display: inline-block;
-            justify-content: center; /* Centre les boutons dans le conteneur */
-            gap: 10px; /* Espace entre les boutons */
-            margin-top: 20px; /* Optionnel : ajoute de l'espace en haut */
-}
-
-
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        /* Styles des sections FAQ et contact */
-        .faq, .contact-info {
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
-        }
-
-        .faq-item h4 {
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .faq-item p {
-            display: none;
-            margin: 5px 0 0;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .contact-form input, .contact-form textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .contact-form button {
-            background-color: #4CAF50; /* Vert */
-            border: none;
-            color: white;
-        }
-
-        /* Style pour le bouton de retour */
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
+   <header>
+     <header>
+      <div class="animation-container">
+         <!-- Logo animé -->
+         <div class="logo">
+            <img src="{{ asset('images/Interface.png') }}" alt="GeniusPro360 Logo" class="fullscreen-image">
+         </div>
+         <!-- Points lumineux animés -->
+         <div class="animated-points">
+            <div class="point"></div>
+            <div class="point"></div>
+            <div class="point"></div>
+            <div class="point"></div>
+         </div>
+      </div>
+   </header>
+   <div class="background-image"></div>
+</body>
 
-        <img src="{{ asset('images/logo.png') }}" alt="GeniusPro 360° Logo" class="logo">
-
-    <div id="vanta-bg"></div>
- <div class="titre">
-         <p class="neon">Bienvenue sur GeniusPro 360°<br></p>
-        </div>
-                <p>Une assistance informatique en temps réel avec réalité augmentée.</p>
-
-    <div class="container">
-        <!-- Logo au centre -->
-      
-
-       
-        <!-- Boutons stylisés -->
+    <!-- Boutons stylisés -->
+    <div class="buttonGroup">
         <button onclick="window.location.href='{{ path('app_video_call') }}'">Assistance</button>
         <button onclick="window.location.href='{{ path('app_diagnostic') }}'">Diagnostic</button>
         <button onclick="window.location.href='{{ path('blog_index') }}'">Blog</button>
+    </div>
+</header>
 
+
+    <main>
         <!-- Lien vers les articles de blog -->
-        <a href="{{ path('blog_index') }}">Voir les articles de blog</a>
+        <section class="blog-section">
+            <a href="{{ path('blog_index') }}" class="blog-link">Voir les articles de blog</a>
+        </section>
 
         <!-- Section FAQ -->
-        <h4>Questions Fréquemment Posées (FAQ)</h4>
-        <div class="faq">
-            <div class="faq-item">
-                <h4>Comment puis-je contacter le support ?</h4>
-                <p>Vous pouvez nous contacter par email à <strong>support@example.com</strong> ou par téléphone au <strong>0123 456 789</strong>.</p>
+        <section class="faq-section">
+            <h4>Questions Fréquemment Posées (FAQ)</h4>
+            <div class="faq">
+                <div class="faq-item">
+                    <h4>Comment puis-je contacter le support ?</h4>
+                    <p>Vous pouvez nous contacter par email à <strong>support@example.com</strong> ou par téléphone au <strong>0123 456 789</strong>.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Quels types de problèmes peuvent être résolus ?</h4>
+                    <p>Nous aidons avec une variété de problèmes techniques, y compris des problèmes de connexion, de configuration, et d'utilisation de notre plateforme.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Quels sont les horaires de support ?</h4>
+                    <p>Notre équipe de support est disponible du lundi au vendredi, de 9h00 à 17h00.</p>
+                </div>
             </div>
-            <div class="faq-item">
-                <h4>Quels types de problèmes peuvent être résolus ?</h4>
-                <p>Nous aidons avec une variété de problèmes techniques, y compris des problèmes de connexion, de configuration, et d'utilisation de notre plateforme.</p>
-            </div>
-            <div class="faq-item">
-                <h4>Quels sont les horaires de support ?</h4>
-                <p>Notre équipe de support est disponible du lundi au vendredi, de 9h00 à 17h00.</p>
-            </div>
-        </div>
+        </section>
 
         <!-- Section Contact -->
-        <h2>Contactez-nous</h2>
-        <div class="contact-info">
-        <section class="buttonGroup">
-  <h3>Scanning</h3>
-  <div class="visual1">
-  </div>
-  
-  <div class="visual2">
-  </div>
-  
-            <h4>Si vous avez besoin d'assistance, veuillez remplir le formulaire ci-dessous :</h4>
-            <form class="contact-form" action="{{ path('app_contact') }}" method="post">
-                <input type="text" name="name" placeholder="Votre nom" required />
-                <input type="email" name="email" placeholder="Votre email" required />
-                <textarea name="message" placeholder="Votre message..." required></textarea>
-                <button type="submit">Envoyer</button>
-            </form>
-        </div>
-    </div>
-</section>
+        <section class="contact-section">
+            <h2>Contactez-nous</h2>
+            <div class="contact-info">
+                <h4>Si vous avez besoin d'assistance, veuillez remplir le formulaire ci-dessous :</h4>
+                <form class="contact-form" action="{{ path('app_contact') }}" method="post">
+                    <input type="text" name="name" placeholder="Votre nom" required />
+                    <input type="email" name="email" placeholder="Votre email" required />
+                    <textarea name="message" placeholder="Votre message..." required></textarea>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GeniusPro360 - Tous droits réservés</p>
+    </footer>
 
     <!-- Scripts pour l'animation Vanta -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
     <script>
-        let vantaEffect;
-        document.addEventListener("DOMContentLoaded", () => {
-            vantaEffect = VANTA.FOG({
-                el: "#vanta-bg",
-                highlightColor: 0xffd700,
-                midtoneColor: 0xe5c100,
-                lowlightColor: 0xa67c00,
-                baseColor: 0x1e1e1e,
-                blurFactor: 0.6,
-                speed: 2.0,
-                zoom: 1.0
-            });
-        });
-
-        /**
- * requestAnimationFrame
- */
-window.requestAnimationFrame = (function(){
-    return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            window.oRequestAnimationFrame      ||
-            window.msRequestAnimationFrame     ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-})();
-
-
-/**
- * Vector
- */
-function Vector(x, y) {
-    this.x = x || 0;
-    this.y = y || 0;
-}
-
-Vector.add = function(a, b) {
-    return new Vector(a.x + b.x, a.y + b.y);
-};
-
-Vector.sub = function(a, b) {
-    return new Vector(a.x - b.x, a.y - b.y);
-};
-
-Vector.prototype = {
-    set: function(x, y) {
-        if (typeof x === 'object') {
-            y = x.y;
-            x = x.x;
-        }
-        this.x = x || 0;
-        this.y = y || 0;
-        return this;
-    },
-
-    add: function(v) {
-        this.x += v.x;
-        this.y += v.y;
-        return this;
-    },
-
-    sub: function(v) {
-        this.x -= v.x;
-        this.y -= v.y;
-        return this;
-    },
-
-    scale: function(s) {
-        this.x *= s;
-        this.y *= s;
-        return this;
-    },
-
-    length: function() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    },
-
-    normalize: function() {
-        var len = Math.sqrt(this.x * this.x + this.y * this.y);
-        if (len) {
-            this.x /= len;
-            this.y /= len;
-        }
-        return this;
-    },
-
-    angle: function() {
-        return Math.atan2(this.y, this.x);
-    },
-
-    distanceTo: function(v) {
-        var dx = v.x - this.x,
-            dy = v.y - this.y;
-        return Math.sqrt(dx * dx + dy * dy);
-    },
-
-    distanceToSq: function(v) {
-        var dx = v.x - this.x,
-            dy = v.y - this.y;
-        return dx * dx + dy * dy;
-    },
-
-    clone: function() {
-        return new Vector(this.x, this.y);
-    }
-};
-
-
-/**
- * Point
- */
-function Point(x, y, radius) {
-    Vector.call(this, x, y);
-
-    this.radius = radius || 7;
-
-    this.vec = new Vector(random(1, -1), random(1, -1)).normalize();
-    this._easeRadius    = this.radius;
-    this._currentRadius = this.radius;
-
-}
-
-Point.prototype = (function(o) {
-    var s = new Vector(0, 0), p;
-    for (p in o) {
-        s[p] = o[p];
-    }
-    return s;
-})({
-    color:       'rgb(255, 255, 255)',
-    dragging:    false,
-    _latestDrag: null,
-
-    update: function(points, bounds) {
-        this._currentRadius = random(this._easeRadius, this._easeRadius * 0.35);
-        this._easeRadius += (this.radius - this._easeRadius) * 0.1;
-
-        if (this.dragging) return;
-
-        var vec = this.vec,
-            i, len, p, d;
-
-        for (i = 0, len = points.length; i < len; i++) {
-            p = points[i];
-            if (p !== this) {
-                d = this.distanceToSq(p);
-                if (d < 90000) {
-                    vec.add(Vector.sub(this, p).normalize().scale(0.03));
-                } else if (d > 250000) {
-                    vec.add(Vector.sub(p, this).normalize().scale(0.015));
-                }
-            }
-        }
-
-        if (vec.length() > 3) vec.normalize().scale(3);
-
-        this.add(vec);
-
-        if (this.x < bounds.x) {
-            this.x = bounds.x;
-            if (vec.x < 0) vec.x *= -1;
-
-        } else if (this.x > bounds.right) {
-            this.x = bounds.right;
-            if (vec.x > 0) vec.x *= -1;
-        }
-
-        if (this.y < bounds.y) {
-            this.y = bounds.y;
-            if (vec.y < 0) vec.y *= -1;
-
-        } else if (this.y > bounds.bottom) {
-            this.y = bounds.bottom;
-            if (vec.y > 0) vec.y *= -1;
-        }
-    },
-
-    hitTest: function(p) {
-        if (this.distanceToSq(p) < 900) {
-            this._easeRadius = this.radius * 2.5;
-            return true;
-        }
-        return false;
-    },
-
-    startDrag: function() {
-        this.dragging = true;
-        this.vec.set(0, 0);
-        this._latestDrag = new Vector().set(this);
-    },
-
-    drag: function(p) {
-        this._latestDrag.set(this);
-        this.set(p);
-    },
-
-    endDrag: function() {
-        this.vec = Vector.sub(this, this._latestDrag);
-        this.dragging = false;
-    },
-
-    draw: function(ctx) {
-        ctx.save();
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this._currentRadius, 0, Math.PI * 2, false);
-        ctx.fill();
-        ctx.shadowBlur  = 20;
-        ctx.shadowColor = this.color;
-        ctx.fillStyle   = 'rgba(0, 0, 0, 1)';
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this._currentRadius, 0, Math.PI * 2, false);
-        ctx.fill();
-        ctx.restore();
-    }
-});
-
-
-/**
- * Lightning
- */
-function Lightning(startPoint, endPoint, step) {
-    this.startPoint = startPoint || new Vector();
-    this.endPoint   = endPoint || new Vector();
-    this.step       = step || 45;
-
-    this.children = [];
-}
-
-Lightning.prototype = {
-    color:         'rgba(255, 255, 255, 1)',
-    speed:         0.025,
-    amplitude:     1,
-    lineWidth:     5,
-    blur :         50,
-    blurColor:     'rgba(255, 255, 255, 0.5)',
-    points:        null,
-    off:           0,
-    _simplexNoise: new SimplexNoise(),
-    // Case by child
-    parent:        null,
-    startStep:     0,
-    endStep:       0,
-
-    length: function() {
-        return this.startPoint.distanceTo(this.endPoint);
-    },
-
-    getChildNum: function() {
-        return children.length;
-    },
-
-    setChildNum: function(num) {
-        var children = this.children, child,
-            i, len;
-
-        len = this.children.length;
-
-        if (len > num) {
-            for (i = num; i < len; i++) {
-                children[i].dispose();
-            }
-            children.splice(num, len - num);
-
-        } else {
-            for (i = len; i < num; i++) {
-                child = new Lightning();
-                child._setAsChild(this);
-                children.push(child);
-            }
-        }
-    },
-
-    update: function() {
-        var startPoint = this.startPoint,
-            endPoint   = this.endPoint,
-            length, normal, radian, sinv, cosv,
-            points, off, waveWidth, n, av, ax, ay, bv, bx, by, m, x, y,
-            children, child,
-            i, len;
-
-        if (this.parent) {
-            if (this.endStep > this.parent.step) {
-                this._updateStepsByParent();
-            }
-
-            startPoint.set(this.parent.points[this.startStep]);
-            endPoint.set(this.parent.points[this.endStep]);
-        }
-
-        length = this.length();
-        normal = Vector.sub(endPoint, startPoint).normalize().scale(length / this.step);
-        radian = normal.angle();
-        sinv   = Math.sin(radian);
-        cosv   = Math.cos(radian);
-
-        points    = this.points = [];
-        off       = this.off += random(this.speed, this.speed * 0.2);
-        waveWidth = (this.parent ? length * 1.5 : length) * this.amplitude;
-        if (waveWidth > 750) waveWidth = 750;
-
-        for (i = 0, len = this.step + 1; i < len; i++) {
-            n = i / 60;
-            av = waveWidth * this._noise(n - off, 0) * 0.5;
-            ax = sinv * av;
-            ay = cosv * av;
-
-            bv = waveWidth * this._noise(n + off, 0) * 0.5;
-            bx = sinv * bv;
-            by = cosv * bv;
-
-            m = Math.sin((Math.PI * (i / (len - 1))));
-
-            x = startPoint.x + normal.x * i + (ax - bx) * m;
-            y = startPoint.y + normal.y * i - (ay - by) * m;
-
-            points.push(new Vector(x, y));
-        }
-
-        children = this.children;
-
-        for (i = 0, len = children.length; i < len; i++) {
-            child = children[i];
-            child.color     = this.color;
-            child.speed     = this.speed * 1.35;
-            child.amplitude = this.amplitude;
-            child.lineWidth = this.lineWidth * 0.75;
-            child.blur      = this.blur;
-            child.blurColor = this.blurColor;
-            children[i].update();
-        }
-    },
-
-    draw: function(ctx) {
-        var points = this.points,
-            children = this.children,
-            i, len, p, d;
-
-        // Blur
-        if (this.blur) {
-            ctx.save();
-            ctx.globalCompositeOperation = 'lighter';
-            ctx.fillStyle   = 'rgba(0, 0, 0, 1)';
-            ctx.shadowBlur  = this.blur;
-            ctx.shadowColor = this.blurColor;
-            ctx.beginPath();
-            for (i = 0, len = points.length; i < len; i++) {
-                p = points[i];
-                d = len > 1 ? p.distanceTo(points[i === len - 1 ? i - 1 : i + 1]) : 0;
-                ctx.moveTo(p.x + d, p.y);
-                ctx.arc(p.x, p.y, d, 0, Math.PI * 2, false);
-            }
-            ctx.fill();
-            ctx.restore();
-        }
-
-        ctx.save();
-        ctx.lineWidth = random(this.lineWidth, 0.5);
-        ctx.strokeStyle = this.color;
-        ctx.beginPath();
-        for (i = 0, len = points.length; i < len; i++) {
-            p = points[i];
-            ctx[i === 0 ? 'moveTo' : 'lineTo'](p.x, p.y);
-        }
-        ctx.stroke();
-        ctx.restore();
-
-        // Draw children
-        for (i = 0, len = this.children.length; i < len; i++) {
-            children[i].draw(ctx);
-        }
-    },
-
-    dispose: function() {
-        if (this._timeoutId) {
-            clearTimeout(this._timeoutId);
-        }
-        this._simplexNoise = null;
-    },
-
-    _noise: function(v) {
-        var octaves = 6,
-            fallout = 0.5,
-            amp = 1, f = 1, sum = 0,
-            i;
-
-        for (i = 0; i < octaves; ++i) {
-            amp *= fallout;
-            sum += amp * (this._simplexNoise.noise2D(v * f, 0) + 1) * 0.5;
-            f *= 2;
-        }
-
-        return sum;
-    },
-
-    _setAsChild: function(lightning) {
-        if (!(lightning instanceof Lightning)) return;
-        this.parent = lightning;
-
-        var self = this,
-            setTimer = function() {
-                self._updateStepsByParent();
-                self._timeoutId = setTimeout(setTimer, randint(1500));
-            };
-
-        self._timeoutId = setTimeout(setTimer, randint(1500));
-    },
-
-    _updateStepsByParent: function() {
-        if (!this.parent) return;
-        var parentStep = this.parent.step;
-        this.startStep = randint(parentStep - 2);
-        this.endStep   = this.startStep + randint(parentStep - this.startStep - 2) + 2;
-        this.step = this.endStep - this.startStep;
-    }
-};
-
-
-/**
- * Rect
- */
-function Rect(x, y, width, height) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.width  = width || 0;
-    this.height = height || 0;
-    this.right  = this.x + this.width;
-    this.bottom = this.y + this.height;
-}
-
-
-// Helpers
-
-function random(max, min) {
-    if (typeof max !== 'number') {
-        return Math.random();
-    } else if (typeof min !== 'number') {
-        min = 0;
-    }
-    return Math.random() * (max - min) + min;
-}
-
-
-function randint(max, min) {
-    if (!max) return 0;
-    return random(max + 1, min) | 0;
-}
-
-
-
-// Initialize
-
-(function() {
-
-    // Vars
-
-    var canvas, context,
-        centerX, centerY, grad,
-        mouse,
-        bounds,
-        points,
-        lightning,
-        gui, control;
-
-
-    // Event Listeners
-
-    function resize() {
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-        centerX = canvas.width * 0.5;
-        centerY = canvas.height * 0.5;
-        context = canvas.getContext('2d');
-        grad = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.sqrt(centerX * centerX + centerY * centerY));
-        grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
-    }
-
-    function mouseMove(e) {
-        mouse.set(e.clientX, e.clientY);
-
-        var i, hit = false;
-        for (i = 0; i < 2; i++) {
-            if ((!hit && points[i].hitTest(mouse)) || points[i].dragging)
-                hit = true;
-        }
-        document.body.style.cursor = hit ? 'pointer' : 'default';
-    }
-
-    function mouseDown(e) {
-        for (var i = 0; i < 2; i++) {
-            if (points[i].hitTest(mouse)) {
-                points[i].startDrag();
-                return;
-            }
-        }
-    }
-
-    function mouseUp(e) {
-        for (var i = 0; i < 2; i++) {
-            if (points[i].dragging)
-                points[i].endDrag();
-        }
-    }
-
-
-    // GUI Control
-
-    control = {
-        childNum: 3,
-        color: [255, 255, 255],
-        backgroundColor: '#0b5693'
-    };
-
-
-    // Init
-
-    canvas = document.getElementById('c');
-
-    window.addEventListener('resize', resize, false);
-    resize(null);
-
-    bounds = new Rect(0, 0, canvas.width, canvas.height);
-    mouse  = new Vector();
-
-    lightning = new Lightning();
-
-    points = [
-        new Point(centerX - 200, centerY, lightning.lineWidth * 1.25),
-        new Point(centerX + 200, centerY, lightning.lineWidth * 1.25)
-    ];
-
-    lightning.startPoint.set(points[0]);
-    lightning.endPoint.set(points[1]);
-    lightning.setChildNum(3);
-
-    canvas.addEventListener('mousemove', mouseMove, false);
-    canvas.addEventListener('mousedown', mouseDown, false);
-    canvas.addEventListener('mouseup', mouseUp, false);
-
-
-    // GUI
-
-    gui = new dat.GUI();
-    gui.add(lightning, 'amplitude', 0, 2).name('Amplitude');
-    gui.add(lightning, 'speed', 0, 0.1).name('Speed');
-    gui.add(control, 'childNum', 0, 10).step(1).name('Child Num').onChange(function() {
-        lightning.setChildNum(control.childNum | 0);
-    });
-    gui.addColor(control, 'color').name('Color').onChange(function() {
-        var c = control.color;
-        var r = (c[0] || 0) | 0, g = (c[1] || 0) | 0, b = (c[2] || 0) | 0,
-            i, len;
-
-        lightning.color     = 'rgb(' + r + ',' + g + ',' + b + ')';
-        lightning.blurColor = 'rgba(' + r + ',' + g + ',' + b + ', 0.5)';
-        for (i = 0, len = points.length; i < len; i++) {
-            points[i].color = lightning.color;
-        }
-    });
-    gui.add(lightning, 'lineWidth', 1, 10).name('Line Width').onChange(function() {
-        for (var i = 0, len = points.length; i < len; i++) {
-            points[i].radius = lightning.lineWidth * 1.25;
-        }
-    });
-    gui.add(lightning, 'blur', 0, 100).name('Blur');
-    gui.addColor(control, 'backgroundColor').name('Background');
-    gui.close();
-
-
-    // Start Update
-
-    var loop = function() {
-        context.save();
-        context.fillStyle = control.backgroundColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = grad;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.restore();
-
-        lightning.startPoint.set(points[0]);
-        lightning.endPoint.set(points[1]);
-        lightning.step = Math.ceil(lightning.length() / 10);
-        if (lightning.step < 5) lightning.step = 5;
-
-        lightning.update();
-        lightning.draw(context);
-
-        var i, p;
-
-        for (i = 0; i < 2; i++) {
-            p = points[i];
-            if (p.dragging) p.drag(mouse);
-            p.update(points, bounds);
-            p.draw(context);
-        }
-
-        requestAnimationFrame(loop);
-    };
-    loop();
-
-})();
-
-        // Toggle FAQ answers
-        document.querySelectorAll('.faq-item h4').forEach(item => {
-            item.addEventListener('click', () => {
-                const content = item.nextElementSibling;
-                content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
-            });
+        VANTA.FOG({
+            el: "body",
+            mouseControls: true,
+            touchControls: true,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            highlightColor: 0xffcc00,
+            midtoneColor: 0xaaaaaa,
+            lowlightColor: 0x333333,
+            baseColor: 0x000000,
         });
     </script>
 </body>
