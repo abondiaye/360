@@ -3,95 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GeniusPro360 - Plateforme d'assistance et diagnostic.">
     <title>{% block title %}GeniusPro360 - Assistance et Diagnostic{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
     <style>
-        /* Styles généraux pour le body et l'image */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
+            background-color: #000;
+            background-image: url('{{ asset('images/Interface.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        /* Conteneur pour l'image en arrière-plan */
-        #background-image {
+        .boule-doree {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, gold 70%, transparent 100%);
+            border-radius: 50%;
+            box-shadow: 0px 0px 30px 10px rgba(255, 215, 0, 0.6), 0px 0px 50px 20px rgba(255, 223, 0, 0.4);
+            margin: auto;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; 
-            left:220px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: electric-glow 3s infinite alternate ease-in-out;
         }
 
-        #background-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* S'adapte sans déformation */
+        @keyframes electric-glow {
+            0% {
+                box-shadow: 0px 0px 30px 10px rgba(255, 215, 0, 0.6), 0px 0px 50px 20px rgba(255, 223, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0px 0px 40px 20px rgba(255, 255, 0, 0.8), 0px 0px 60px 30px rgba(255, 255, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0px 0px 50px 25px rgba(255, 250, 100, 1), 0px 0px 70px 40px rgba(255, 250, 100, 0.7);
+            }
         }
 
-        /* Conteneur des boutons */
         .buttonGroup {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
-            gap: 15px;
-            z-index: 2; /* Les boutons restent au-dessus */
+            justify-content: space-around;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
         }
 
         .buttonGroup button {
-            padding: 15px 25px;
-            font-size: 18px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, gold 60%, transparent 100%);
+            box-shadow: 0px 0px 20px 8px rgba(255, 215, 0, 0.6);
+            border: 2px solid gold;
+            color: black;
+            font-size: 16px;
             font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .buttonGroup button:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
+            transform: scale(1.2);
+            box-shadow: 0px 0px 40px 15px rgba(255, 215, 0, 0.9);
         }
 
-        /* Couche pour Vanta.js */
-        #vanta-animation {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; /* Les nuages sont devant l'image mais derrière les boutons */
+        @media (max-width: 768px) {
+            .boule-doree {
+                width: 150px;
+                height: 150px;
+            }
+
+            .buttonGroup button {
+                width: 80px;
+                height: 80px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-     <!-- Boutons en haut des couches -->
-    <div class="buttonGroup">
-        <button onclick="window.location.href='{{ path('app_video_call') }}'">Assistance</button>
-        <button onclick="window.location.href='{{ path('app_diagnostic') }}'">Diagnostic</button>
-        <button onclick="window.location.href='{{ path('blog_index') }}'">Blog</button>
-    </div>
-    <!-- Image en arrière-plan -->
-    <div id="background-image">
-        <img src="{{ asset('images/Interface.png') }}" alt="GeniusPro360 Logo">
-    </div>
-
-    <!-- Animation Vanta -->
-    <div id="vanta-animation"></div>
-
-
-    <!-- Script Vanta.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+    <main id="main-content">
+        <div class="boule-doree"></div>
+        <div class="buttonGroup">
+            <button onclick="navigate('{{ path('app_video_call') }}')">Assistance</button>
+            <button onclick="navigate('{{ path('app_diagnostic') }}')">Diagnostic</button>
+            <button onclick="navigate('{{ path('blog_index') }}')">Blog</button>
+        </div>
+    </main>
     <script>
-       
+        function navigate(url) {
+            window.location.href = url;
+        }
     </script>
 </body>
 </html>
