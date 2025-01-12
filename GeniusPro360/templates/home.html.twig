@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="GeniusPro360 - Plateforme d'assistance et diagnostic.">
-    <title>{% block title %}GeniusPro360 - Assistance et Diagnostic{% endblock %}</title>
+    <title>GeniusPro360 - Assistance et Diagnostic</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
     <style>
+        /* Styles généraux */
         body, html {
             margin: 0;
             padding: 0;
@@ -22,10 +23,11 @@
             background-repeat: no-repeat;
         }
 
+        /* Boule centrale */
         .boule-doree {
-            width: 200px;
-            background: radial-gradient(circle, gold 70%, transparent 100%);
-            border-radius: 50%;
+            width: 150px; /* Taille réduite */
+            height: 150px;
+            background: radial-gradient(circle, gold, transparent);
             box-shadow: 0px 0px 30px 10px rgba(255, 215, 0, 0.6), 0px 0px 50px 20px rgba(255, 223, 0, 0.4);
             margin: auto;
             position: absolute;
@@ -47,51 +49,99 @@
             }
         }
 
+        /* Conteneur des planètes */
         .buttonGroup {
             position: absolute;
             display: flex;
             justify-content: space-around;
+            align-items: center;
             width: 100%;
             height: 100%;
             z-index: 2;
         }
 
+        /* Boutons en forme de planète avec éclairs */
         .buttonGroup button {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: radial-gradient(circle, gold 60%, transparent 100%);
-            box-shadow: 0px 0px 20px 8px rgba(255, 215, 0, 0.6);
-            border: 2px solid gold;
-            color: black;
-            font-size: 16px;
+            border: none;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 223, 0, 1) 30%, rgba(255, 223, 0, 0.5) 60%, rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 0 25px 10px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.7);
+            color: filter: brightness(50%);
+            font-size: 14px;
             font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            animation: planet-spin 10s infinite linear;
+            overflow: hidden;
         }
 
+        /* Animation de rotation des boutons */
+        @keyframes planet-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Effet d'éclair */
+        .buttonGroup button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 20%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(10px);
+            opacity: 0;
+            animation: lightning 3s infinite ease-in-out;
+        }
+
+        /* Animation d'éclair */
+        @keyframes lightning {
+            0%, 80% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            85% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Effet au survol */
         .buttonGroup button:hover {
-            transform: scale(1.2);
-            box-shadow: 0px 0px 40px 15px rgba(255, 215, 0, 0.9);
+            box-shadow: 0 0 35px 15px rgba(255, 223, 0, 1), inset 0 0 20px rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
         }
 
         @media (max-width: 768px) {
             .boule-doree {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
             }
 
             .buttonGroup button {
-                width: 80px;
-                height: 80px;
-                font-size: 14px;
+                width: 90px;
+                height: 90px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
     <main id="main-content">
+        <!-- Boule centrale -->
         <div class="boule-doree"></div>
+
+        <!-- Boutons dynamiques -->
         <div class="buttonGroup">
             <button onclick="navigate('{{ path('app_video_call') }}')">Assistance</button>
             <button onclick="navigate('{{ path('app_diagnostic') }}')">Diagnostic</button>
