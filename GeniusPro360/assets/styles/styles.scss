@@ -3,143 +3,168 @@ $gold: gold;
 $black: black;
 
 .body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%; // Assure que le body couvre toute la hauteur de la page
-    overflow: hidden;
-    object-fit: cover;
-    position: relative;
-    z-index: -1;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; // Assure que le body couvre toute la hauteur de la page
+  overflow: hidden;
+  object-fit: cover;
+  position: relative;
+  z-index: -1;
 
+  // Image de fond
+  .fullscreen-container {
+    display: flex; /* Utilise Flexbox pour centrer */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    position: relative; /* Nécessaire pour positionner des enfants */
+    width: 100vw; /* Largeur complète de la fenêtre */
+    height: 100vh; /* Hauteur complète de la fenêtre */
+    overflow: hidden; /* Empêche les débordements */
+  }
 
-    .imageFond {     
-     background-image: url("https:// assets/images/interface.png")
-    }
-
-    // Image de fond
-    .fullscreen-container {
-        display: flex; /* Utilise Flexbox pour centrer */
-        justify-content: center; /* Centre horizontalement */
-        align-items: center; /* Centre verticalement */
-        position: relative; /* Nécessaire pour positionner des enfants */
-        width: 100vw; /* Largeur complète de la fenêtre */
-        height: 100vh; /* Hauteur complète de la fenêtre */
-        overflow: hidden; /* Empêche les débordements */
-    }
-    
-    .fullscreen-image {
-        max-width: 100%; /* Adapte l'image à la largeur disponible */
-        max-height: 100%; /* Adapte l'image à la hauteur disponible */
-        object-fit: contain; /* Maintient les proportions de l'image */
-    }
-    
+  .fullscreen-image {
+    max-width: 100%; /* Adapte l'image à la largeur disponible */
+    max-height: 100%; /* Adapte l'image à la hauteur disponible */
+    object-fit: contain; /* Maintient les proportions de l'image */
+  }
 }
 
 // Centrage du contenu
 .header {
-    position: relative;
-    z-index: 1; // Place le contenu au-dessus de l'image
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; // Assure le centrage vertical et horizontal
-    text-align: center;
-    height: 100%; // Garantit que le header prend toute la hauteur disponible
+  position: relative;
+  z-index: 1; // Place le contenu au-dessus de l'image
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; // Assure le centrage vertical et horizontal
+  text-align: center;
+  height: 100%; // Garantit que le header prend toute la hauteur disponible
 
-    .animation-container {
-        margin-bottom: 20px;
+  .animation-container {
+    margin-bottom: 20px;
 
-        .logo {
-            img {
-                width: 200px; // Taille du logo
-                animation: spin 10s linear infinite;
-            }
+    .logo {
+      img {
+        width: 200px; // Taille du logo
+        animation: spin 10s linear infinite;
+      }
 
-            @keyframes spin {
-                from {
-                    transform: rotate(0deg);
-                }
-                to {
-                    transform: rotate(360deg);
-                }
-            }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
         }
-
-        .animated-points {
-            position: relative;
-            z-index: 1;
-
-            .point {
-                position: absolute;
-                width: 10px;
-                height: 10px;
-                background-color: $gold;
-                border-radius: 50%;
-                animation: pulse 2s infinite;
-
-                &:nth-child(1) {
-                    top: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    animation-delay: 0s;
-                }
-
-                &:nth-child(2) {
-                    top: 50%;
-                    right: 0;
-                    transform: translateY(-50%);
-                    animation-delay: 0.5s;
-                }
-
-                &:nth-child(3) {
-                    bottom: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    animation-delay: 1s;
-                }
-
-                &:nth-child(4) {
-                    top: 50%;
-                    left: 0;
-                    transform: translateY(-50%);
-                    animation-delay: 1.5s;
-                }
-            }
-
-            @keyframes pulse {
-                0%, 100% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.5);
-                }
-            }
+        to {
+          transform: rotate(360deg);
         }
+      }
     }
+
+    .animated-points {
+      position: relative;
+      z-index: 1;
+
+      .point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: $gold;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+
+        &:nth-child(1) {
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          animation-delay: 0s;
+        }
+
+        &:nth-child(2) {
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          animation-delay: 0.5s;
+        }
+
+        &:nth-child(3) {
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          animation-delay: 1s;
+        }
+
+        &:nth-child(4) {
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          animation-delay: 1.5s;
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+      }
+    }
+  }
 }
 
-// Boutons stylisés
+// Boutons stylisés avec effet d'éclair
 .buttonGroup {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
 
-    button {
-        padding: 10px 20px;
-        background-color: $gold;
-        border: none;
-        color: $black;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: transform 0.3s ease;
+  button {
+    padding: 10px 20px;
+    background-color: $gold;
+    border: none;
+    color: $black;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; // Nécessaire pour les éclairs
+    overflow: hidden; // Empêche les débordements des éclairs
+    transition: transform 0.3s ease;
 
-        &:hover {
-            transform: scale(1.1);
-        }
+    &:hover {
+      transform: scale(1.1);
     }
+
+    // Effet d'éclair dynamique
+    &::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -30%;
+      width: 160%;
+      height: 160%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 10%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      animation: lightning 2.5s infinite ease-in-out;
+    }
+  }
+
+  @keyframes lightning {
+    0%, 80% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    85% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
 }
