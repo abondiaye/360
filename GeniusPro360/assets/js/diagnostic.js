@@ -1,127 +1,97 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('.diagnostic-form');
-    const diagnostics = [];
-    const retourBtn = document.querySelector('.btn-retour');
-    const loadingIndicator = document.getElementById('loading-indicator');
+/*  clock */
+const hours = document.querySelector('.hours');
+const minutes = document.querySelector('.minutes');
+const seconds = document.querySelector('.seconds');
 
-    // Charger les diagnostics sauvegardés localement au démarrage
-    loadFromLocalStorage();
+/*  play button */
+const play = document.querySelector('.play');
+const pause = document.querySelector('.pause');
+const playBtn = document.querySelector('.circle__btn');
+const wave1 = document.querySelector('.circle__back-1');
+const wave2 = document.querySelector('.circle__back-2');
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+/*  rate slider */
+const container = document.querySelector('.slider__box');
+const btn = document.querySelector('.slider__btn');
+const color = document.querySelector('.slider__color');
+const tooltip = document.querySelector('.slider__tooltip');
 
-        const pcNumber = document.getElementById('pc-number').value;
-        const problemDescription = document.querySelector('.form__input').value;
+clock = () => {
+  let today = new Date();
+  let h = (today.getHours() % 12) + today.getMinutes() / 59; // 22 % 12 = 10pm
+  let m = today.getMinutes(); // 0 - 59
+  let s = today.getSeconds(); // 0 - 59
 
-        // Validation des champs
-        const pcNumberRegex = /^\d{1,10}$/;
-        if (!pcNumberRegex.test(pcNumber)) {
-            alert('Le numéro de PC doit contenir entre 1 et 10 chiffres.');
-            return;
-        }
-        if (!problemDescription) {
-            alert('Veuillez décrire votre problème.');
-            return;
-        }
+  h *= 30; // 12 * 30 = 360deg
+  m *= 6;
+  s *= 6; // 60 * 6 = 360deg
 
-        // Afficher le chargement
-        loadingIndicator.style.display = 'block';
+  rotation(hours, h);
+  rotation(minutes, m);
+  rotation(seconds, s);
 
-        // Ajoute le diagnostic à l'historique local
-        diagnostics.push({ pcNumber, problemDescription });
-        updateHistory();
+  // call every second
+  setTimeout(clock, 500);
+}
 
-        // Requête AJAX pour sauvegarder le diagnostic en base de données
-        fetch('/api/diagnostic/save', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ pcNumber, problemDescription })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erreur lors de la sauvegarde du diagnostic');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert('Diagnostic sauvegardé avec succès en base de données.');
-            } else {
-                alert('Erreur: ' + (data.error || 'Une erreur est survenue'));
-            }
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-            alert('Une erreur est survenue. Veuillez réessayer.');
-        })
-        .finally(() => {
-            loadingIndicator.style.display = 'none'; // Cacher le chargement une fois terminé
-        });
-    });
+rotation = (target, val) => {
+  target.style.transform =  `rotate(${val}deg)`;
+}
 
-    // Animation GSAP sur le bouton Retour au survol
-    retourBtn.addEventListener('mouseenter', () => {
-        gsap.to(retourBtn, {
-            scale: 1.1,
-            duration: 0.5,
-            ease: "power1.inOut",
-            yoyo: true,
-            repeat: -1
-        });
-    });
-    retourBtn.addEventListener('mouseleave', () => {
-        gsap.to(retourBtn, { scale: 1, duration: 0.5 });
-    });
+window.onload = clock();
 
-    // Fonction pour mettre à jour l'historique sur la page et localement
-    function updateHistory() {
-        const historyList = document.getElementById('diagnosticHistory');
-        historyList.innerHTML = '';
+dragElement = (target, btn) => {
+  target.addEventListener('mousedown', (e) => {
+      onMouseMove(e);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+  });
 
-        diagnostics.forEach((diag, index) => {
-            const li = document.createElement('li');
-            li.textContent = `Diagnostic ${index + 1}: PC ${diag.pcNumber} - ${diag.problemDescription}`;
-            historyList.appendChild(li);
-        });
-        saveToLocalStorage(); // Sauvegarder l'historique localement après chaque mise à jour
-    }
+  onMouseMove = (e) => {
+      e.preventDefault();
+      let targetRect = target.getBoundingClientRect();
+      let x = e.pageX - targetRect.left + 10;
+      if (x > targetRect.width) { x = targetRect.width};
+      if (x < 0){ x = 0};
+      btn.x = x - 10;
+      btn.style.left = btn.x + 'px';
 
-    // Événement pour réinitialiser le formulaire
-    document.getElementById('cancel').addEventListener('click', () => {
-        document.getElementById('pc-number').value = '';
-        document.querySelector('.form__input').value = '';
-    });
+      // get the position of the button inside the container (%)
+      let percentPosition = (btn.x + 10) / targetRect.width * 100;
+      
+      // color width = position of button (%)
+      color.style.width = percentPosition + "%";
 
-    function saveToLocalStorage() {
-        localStorage.setItem('diagnostics', JSON.stringify(diagnostics));
-    }
+      // move the tooltip when button moves, and show the tooltip
+      tooltip.style.left = btn.x - 5 + 'px';
+      tooltip.style.opacity = 1;
 
-    function loadFromLocalStorage() {
-        const storedDiagnostics = localStorage.getItem('diagnostics');
-        if (storedDiagnostics) {
-            diagnostics.push(...JSON.parse(storedDiagnostics));
-            updateHistory();
-        }
-    }
+      // show the percentage in the tooltip
+      tooltip.textContent = Math.round(percentPosition) + '%';
+  };
+
+  onMouseUp  = (e) => {
+      window.removeEventListener('mousemove', onMouseMove);
+      tooltip.style.opacity = 0;
+
+      btn.addEventListener('mouseover', function() {
+        tooltip.style.opacity = 1;
+      });
+      
+      btn.addEventListener('mouseout', function() {
+        tooltip.style.opacity = 0;
+      });
+  };
+};
+
+dragElement(container, btn);
+
+/*  play button  */
+playBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  pause.classList.toggle('visibility');
+  play.classList.toggle('visibility');
+  playBtn.classList.toggle('shadow');
+  wave1.classList.toggle('paused');
+  wave2.classList.toggle('paused');
 });
-
-// Passer à la question suivante
-function nextQuestion(step) {
-    gsap.to(".question-step", { y: -20, opacity: 0, duration: 0.5, onComplete: () => {
-        document.querySelectorAll(".question-step").forEach(el => el.style.display = "none");
-        document.getElementById(`step${step}`).style.display = "block";
-        gsap.fromTo(`#step${step}`, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 });
-    }});
-}
-
-// Afficher le résultat final
-function showResult(message) {
-    document.getElementById("result-text").innerText = message;
-    gsap.to(".question-step", { opacity: 0, duration: 0.5, onComplete: () => {
-        document.querySelectorAll(".question-step").forEach(el => el.style.display = "none");
-        document.getElementById("result").style.display = "block";
-        gsap.to("#result", { opacity: 1, duration: 0.5 });
-    }});
-}

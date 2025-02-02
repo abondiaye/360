@@ -1,218 +1,914 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GeniusPro360 - Plateforme d'assistance et diagnostic.">
     <title>GeniusPro360 - Assistance et Diagnostic</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
     <style>
-        body, html {
+        body {
             margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Arial', sans-serif;
             overflow: hidden;
-	        background: #0a0a2a;
+            background: #0a0a2a;
             background-image: url('{{ asset('images/Interface.png') }}');
             background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
         }
+        .wrapper {
+            linear;
+            margin: auto;
+            width: 1028px;
+            height: 622px;
+            padding: 3%;
+            
+            }
+            .ball {
+            display: grid;
+            height: 500px;
+            width: 500px;
+            border: 0px solid white;
+            border-radius: 50%;
+            margin: -575px auto;
+            animation: glowBall 0.5s infinite alternate;
+            }
+            .ball-inner {
+            height: 500px;
+            width: 500px;
+            border-radius: 50%;
+            margin: auto;
+            animation: glowOuter 0.75s infinite alternate;
+            display: grid;
+            }
+            .centre {
+            filter: blur(10);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0% auto;
+            animation: glowCentre 0.5s infinite alternate;
+            }
+            .centre:hover {
+            background: white;
+            }
 
-        /* Conteneur des étoiles filantes sur toute la page */
-        .shooting-stars {
+            .centreOut {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+
+            margin: 40% auto;
+            animation: glowCentreOut 0.5s infinite alternate;
+            }
+
+            @keyframes glowCentre {
+            from {
+                box-shadow: inset 0px 0px 45px 5px purple;
+            }
+            to {
+                box-shadow: inset 0px 0px -45px 0px purple;
+            }
+            }
+            @keyframes glowCentreOut {
+            from {
+                box-shadow: 0px 0px -45px 0px purple;
+            }
+            to {
+                box-shadow: 0px 0px 45px 0px purple;
+            }
+            }
+
+            @keyframes glowOuter {
+            from {
+                box-shadow: inset 0px 0px -45px 0px pink;
+            }
+            to {
+                box-shadow: inset 0px 0px 195px 0px purple;
+            }
+            }
+            @keyframes glowBall {
+            from {
+                box-shadow: 0px 0px 0px 0px pink;
+            }
+            to {
+                box-shadow: 0px 0px 75px 5px magenta;
+            }
+            }
+            .path {
+            filter: url("#mySVGfilter");
+            stroke-dasharray: 100;
+            animation: dash 1.5s infinite;
+            }
+
+            @keyframes dash {
+            to {
+                stroke-dashoffset: 600;
+            }
+            }
+
+                    serif;
+            padding: 0;
+            margin: 0;
+            background-color: #222;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+                -o-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+        }
+
+        canvas {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
         }
-
-        /* Une étoile filante */
-        .shooting-stars .star {
+        .lightning {
             position: absolute;
-            top: -5%;
-            left: 50%;
             width: 2px;
-            height: 80px;
-            background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
-            animation: fall 3s linear infinite;
+            height: 100px;
+            background: white;
+            box-shadow: 0 0 10px white;
+            opacity: 0;
+            transform: rotateZ(20deg);
+            animation: flash 0.2s ease-out infinite;
         }
 
-        /* Animation de chute des étoiles */
-        @keyframes fall {
+        @keyframes flash {
             0% {
-                transform: translateY(0) translateX(-50%) rotate(45deg);
                 opacity: 1;
+                transform: scaleY(1) translateY(0);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scaleY(1.5) translateY(10px);
             }
             100% {
-                transform: translateY(120%) translateX(-50%) rotate(45deg);
+                opacity: 0;
+                transform: scaleY(2) translateY(20px);
+            }
+        }
+
+        .stars {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+        }
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: fall 2s linear infinite;
+        }
+        @keyframes fall {
+            from {
+                transform: translateY(-100vh) translateX(50vw);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) translateX(-50vw);
                 opacity: 0;
             }
         }
-
-        /* Animation des étoiles avec différents délais et vitesses */
-        .shooting-stars .star:nth-child(odd) {
-            animation-duration: 2s;
-            animation-delay: 1s;
-        }
-
-        .shooting-stars .star:nth-child(even) {
-            animation-duration: 3.5s;
-            animation-delay: 0s;
-        }
-
-        /* Animation des petites étoiles scintillantes */
-        .sparkling-stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .sparkling-stars .sparkle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            animation: sparkle 2s infinite ease-in-out;
-        }
-
-        @keyframes sparkle {
-            0% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
-        }
-
-        /* Boule centrale */
-        .boule-doree {
-            background: radial-gradient(circle, gold, transparent);
-            box-shadow: 0px 0px 30px 10px rgba(255, 215, 0, 0.6), 0px 0px 50px 20px rgba(255, 223, 0, 0.4);
-            margin: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: electric-glow 3s infinite alternate ease-in-out;
-        }
-
-        @keyframes electric-glow {
-            0% {
-                box-shadow: 0px 0px 30px 10px rgba(255, 215, 0, 0.6), 0px 0px 50px 20px rgba(255, 223, 0, 0.4);
-            }
-            50% {
-                box-shadow: 0px 0px 40px 20px rgba(255, 255, 0, 0.8), 0px 0px 60px 30px rgba(255, 255, 0, 0.5);
-            }
-            100% {
-                box-shadow: 0px 0px 50px 25px rgba(255, 250, 100, 1), 0px 0px 70px 40px rgba(255, 250, 100, 0.7);
-            }
-        }
-
-        /* Conteneur des boutons */
         .buttonGroup {
             position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
+            gap: 20px;
         }
-
-        /* Boutons avec effet */
         .buttonGroup button {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: none;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 223, 0, 1) 30%, rgba(255, 223, 0, 0.5) 60%, rgba(0, 0, 0, 0.3) 100%);
-            box-shadow: 0 0 25px 10px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.7);
+            background: radial-gradient(circle, gold, darkorange);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
             color: black;
             font-size: 14px;
             font-weight: bold;
             text-align: center;
-            text-transform: uppercase;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
-
         .buttonGroup button:hover {
-            box-shadow: 0 0 35px 15px rgba(255, 223, 0, 1), inset 0 0 20px rgba(255, 255, 255, 0.9);
             transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 223, 0, 1);
         }
-
     </style>
 </head>
 <body>
-    <main id="main-content">
-        <!-- Constellation d'étoiles filantes -->
-        <div class="shooting-stars">
-            <!-- Générer des étoiles à différents endroits -->
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
+     <div class="wrapper">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="900px" height="622px" viewBox="0 0 900 622" enable-background="new 0 0 900 622" xml:space="preserve">
+      <filter id="mySVGfilter" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" />
+      </filter>
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M712.547,303.5
+	c0,24.542-3.991,53.515-11.182,75.659c-7.452,22.951-38.483,36.353-52.387,55.457c-14.042,19.295-20.552,48.396-39.847,62.438
+	c-19.104,13.903-50.653,5.275-73.604,12.728c-22.145,7.19-42.485,25.805-67.027,25.805s-51.982,3.252-74.127-3.938
+	c-22.951-7.452-44.921-24.099-64.025-38.002c-19.294-14.042-32.856-36.407-46.898-55.702c-13.903-19.104-31.08-38.848-38.532-61.799
+	C237.728,354,231.75,328.042,231.75,303.5c0-24.541,3.304-51.368,10.494-73.513c7.452-22.951,30.143-39.759,44.046-58.863
+	c14.042-19.295,31.892-33.933,51.187-47.975c19.104-13.903,41.17-18.095,64.121-25.548c22.145-7.19,42.36-33.245,66.902-33.245
+	s48.264,15.257,70.408,22.447c22.951,7.452,43.959,19.078,63.063,32.98c19.295,14.042,23.36,40.294,37.402,59.589
+	c13.903,19.104,49.146,27.267,56.599,50.218C703.163,251.737,712.547,278.958,712.547,303.5z" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M468.416,234.857
+	c0-17.984-0.161-26.977-0.322-35.969c-0.04-2.249-0.08-4.011-0.118-6.157c-0.038,0.798-0.073-4.391-0.104-8.456
+	c-0.03-15.898-0.056-7.007-0.073-6.896c-0.009-2.892-0.016-19.416-0.021-7.915c-0.005-13.068-0.007-7.918-0.007-6.546
+	c0-11.642,0.021-17.884,0.059-14.858c0.039-0.593,0.095-1.075,0.166-0.678c0.144-27.477,0.348,11.445,0.594-5.82
+	c0.123-14.597,0.256-3.649,0.396-4.807c0.141-0.106,0.289,12.903,0.442-0.967c0.307-14.444,0.634-5.234,0.961-8.839
+	c0.327-9.095,0.654-7.146,0.961-9.362c0.307,1.025,0.594,2.473,0.839-5.25c0.122-12.176,0.235-11.275,0.335-10.245
+	c0.1-12.275,0.186-0.26,0.258,0.461c0.143,2.243,0.225-4.496,0.225-11.573" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M469.176,361.489
+	c0,9.407,0.035,16.462,0.088,22.342c0.053,5.879,0.124,10.583,0.194,15.286c0.07,4.367,0.142,12.175,0.194,15.286
+	c0.053,6.342,0.088,9.041,0.088,22.341c0-1.015-0.286,12.259-0.716,22.342c-0.43,11.576-1.003,13.962-1.575,15.286
+	c-0.572-2.765-1.146,9.323-1.575,15.286c-0.43,8.592-0.716,12.935-0.716,22.342" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M427.085,257.209
+	c-16.618-17.125-21.624-20.528-32.436-30.792c-3.604-3.421-7.853-7.605-13.392-13.313c-5.539-4.58-9.411-10.284-12.449-14.286
+	c-3.038-10.155-5.241-10.564-7.445-10.879c-2.204-0.904-4.408-2.009-7.446-10.879c-3.038-3.966-6.909-7.607-12.449-14.286" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M508.469,342.775
+	c16.617,17.124,21.623,20.527,32.436,30.791c3.604,3.422,7.854,7.605,13.393,13.313c5.539,4.58,9.41,10.284,12.448,14.286
+	c3.038,10.154,5.241,10.564,7.445,10.879c2.204,0.904,4.407,2.009,7.446,10.879c3.037,3.966,6.908,7.607,12.448,14.285" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M411.49,312.676
+	c-26.248,0-32.81,0.317-49.215,0.477c-5.468,0.053-12.03,2.829-20.779,0.088c-8.75-5.042-15.312-3.942-20.78-0.716
+	c-5.468,1.802-9.843-3.955-14.218-1.575c-4.375,1.547-8.75,0.095-14.218-1.575c-5.468,3.531-12.03-0.134-20.78-0.716" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M521.5,298.603
+	c39.75,0,39.75-3.784,79.5-3.784c9.938,0,17.391,0.327,23.602,1.775c6.211,7.057,11.18,0.686,16.148,3.904
+	c4.969-9.045,9.938,6.59,16.148,3.904c6.211,5.563,13.664-7.438,23.602,1.775" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M433.524,348.421
+	c-6.162,2.645-10.678,8.51-14.371,14.932c-3.693-5.54-6.563,12.726-9.434,10.616c-2.87,0.074-5.741,4.877-9.434,10.615
+	c-3.693,0.902-8.209,10.232-14.371,14.932c-6.162,7.097-11.098,13.951-15.421,13.879c-4.323,3.387-8.033,5.845-11.743,8.302
+	c-7.42,4.915-14.841,9.829-27.165,22.181" />
+      <path class="path" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-miterlimit="10" d="M508.429,267.209
+	c19.458-17.903,23.325-23.296,34.987-34.945c3.887-3.883,8.641-8.461,15.126-14.429c6.485-0.934,11.681-7.831,16.231-13.412
+	c4.55,12.939,8.455-1.756,12.36-8.022c3.905-10.028,7.811-11.004,12.36-8.021c4.551-12.24,9.746-0.636,16.231-13.412" />
+    </svg>
+    <div class="ball">
 
-            <!-- Ajoutez plus de stars pour couvrir la page -->
+      <div class="ball-inner">
+
+        <div class="centreOut">
+          <div class="centre"></div>
         </div>
+      </div>
+    </div>
+  </div>
+    <div class="stars"></div>
+    <div class="buttonGroup">
+        <button onclick="window.location.href='{{ path('app_video_call') }}'">Assistance</button>
+        <button onclick="window.location.href='{{ path('app_diagnostic') }}'">Boutiques</button>
+        <button onclick="window.location.href='{{ path('blog_index') }}'">Blog</button>
+    </div>
+   <script>
+    function createLightning() {
+        const lightning = document.createElement('div');
+        lightning.classList.add('lightning');
+        document.body.appendChild(lightning);
 
-        <!-- Animation des petites étoiles scintillantes -->
-        <div class="sparkling-stars">
-            <div class="sparkle" style="top: 10%; left: 20%;"></div>
-            <div class="sparkle" style="top: 30%; left: 50%;"></div>
-            <div class="sparkle" style="top: 50%; left: 70%;"></div>
-            <div class="sparkle" style="top: 70%; left: 80%;"></div>
-            <div class="sparkle" style="top: 90%; left: 30%;"></div>
-            <div class="sparkle" style="top: 40%; left: 10%;"></div>
-            <div class="sparkle" style="top: 60%; left: 90%;"></div>
-            <div class="sparkle" style="top: 20%; left: 60%;"></div>
-            <div class="sparkle" style="top: 80%; left: 50%;"></div>
-            <div class="sparkle" style="top: 10%; left: 90%;"></div>
-        </div>
+        // Positionnement autour de l'image
+        let posX = window.innerWidth / 2 + (Math.random() * 300 - 150);
+        let posY = window.innerHeight / 2 + (Math.random() * 200 - 100);
 
-        <!-- Boule centrale -->
-        <div class="boule-doree"></div>
+        lightning.style.left = `${posX}px`;
+        lightning.style.top = `${posY}px`;
 
-        <!-- Boutons dynamiques -->
-        <div class="buttonGroup">
-            <button onclick="navigate('{{ path('app_video_call') }}')">Assistance</button>
-            <button onclick="navigate('{{ path('app_diagnostic') }}')">Boutiques</button>
-            <button onclick="navigate('{{ path('blog_index') }}')">Blog</button>
-        </div>
-    </main>
-    <script>
-        function navigate(url) {
-            window.location.href = url;
+        // Supprimer après animation
+        setTimeout(() => {
+            lightning.remove();
+            scheduleNextLightning(); // Replanifier un autre éclair après un délai aléatoire
+        }, 200);
+    }
+
+    function scheduleNextLightning() {
+        let delay = Math.random() * 3000 + 1000; // Entre 1 et 4 secondes
+        setTimeout(createLightning, delay);
+    }
+
+    scheduleNextLightning(); // Lancer la première apparition des éclairs
+
+    // Ajout des étoiles et étoiles filantes
+    const starsContainer = document.querySelector('.stars');
+    for (let i = 0; i < 150; i++) {  
+        let star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        starsContainer.appendChild(star);
+    }
+
+    for (let i = 0; i < 10; i++) {  
+        let shootingStar = document.createElement('div');
+        shootingStar.classList.add('shooting-star');
+        shootingStar.style.top = Math.random() * 100 + 'vh';
+        shootingStar.style.left = Math.random() * 100 + 'vw';
+        shootingStar.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        starsContainer.appendChild(shootingStar);
+    }
+    /**
+ * requestAnimationFrame
+ */
+window.requestAnimationFrame = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+})();
+
+
+/**
+ * Vector
+ */
+function Vector(x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+}
+
+Vector.add = function(a, b) {
+    return new Vector(a.x + b.x, a.y + b.y);
+};
+
+Vector.sub = function(a, b) {
+    return new Vector(a.x - b.x, a.y - b.y);
+};
+
+Vector.prototype = {
+    set: function(x, y) {
+        if (typeof x === 'object') {
+            y = x.y;
+            x = x.x;
         }
-    </script>
+        this.x = x || 0;
+        this.y = y || 0;
+        return this;
+    },
+
+    add: function(v) {
+        this.x += v.x;
+        this.y += v.y;
+        return this;
+    },
+
+    sub: function(v) {
+        this.x -= v.x;
+        this.y -= v.y;
+        return this;
+    },
+
+    scale: function(s) {
+        this.x *= s;
+        this.y *= s;
+        return this;
+    },
+
+    length: function() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    },
+
+    normalize: function() {
+        var len = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (len) {
+            this.x /= len;
+            this.y /= len;
+        }
+        return this;
+    },
+
+    angle: function() {
+        return Math.atan2(this.y, this.x);
+    },
+
+    distanceTo: function(v) {
+        var dx = v.x - this.x,
+            dy = v.y - this.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    },
+
+    distanceToSq: function(v) {
+        var dx = v.x - this.x,
+            dy = v.y - this.y;
+        return dx * dx + dy * dy;
+    },
+
+    clone: function() {
+        return new Vector(this.x, this.y);
+    }
+};
+
+
+/**
+ * Point
+ */
+function Point(x, y, radius) {
+    Vector.call(this, x, y);
+
+    this.radius = radius || 7;
+
+    this.vec = new Vector(random(1, -1), random(1, -1)).normalize();
+    this._easeRadius    = this.radius;
+    this._currentRadius = this.radius;
+
+}
+
+Point.prototype = (function(o) {
+    var s = new Vector(0, 0), p;
+    for (p in o) {
+        s[p] = o[p];
+    }
+    return s;
+})({
+    color:       'rgb(255, 255, 255)',
+    dragging:    false,
+    _latestDrag: null,
+
+    update: function(points, bounds) {
+        this._currentRadius = random(this._easeRadius, this._easeRadius * 0.35);
+        this._easeRadius += (this.radius - this._easeRadius) * 0.1;
+
+        if (this.dragging) return;
+
+        var vec = this.vec,
+            i, len, p, d;
+
+        for (i = 0, len = points.length; i < len; i++) {
+            p = points[i];
+            if (p !== this) {
+                d = this.distanceToSq(p);
+                if (d < 90000) {
+                    vec.add(Vector.sub(this, p).normalize().scale(0.03));
+                } else if (d > 250000) {
+                    vec.add(Vector.sub(p, this).normalize().scale(0.015));
+                }
+            }
+        }
+
+        if (vec.length() > 3) vec.normalize().scale(3);
+
+        this.add(vec);
+
+        if (this.x < bounds.x) {
+            this.x = bounds.x;
+            if (vec.x < 0) vec.x *= -1;
+
+        } else if (this.x > bounds.right) {
+            this.x = bounds.right;
+            if (vec.x > 0) vec.x *= -1;
+        }
+
+        if (this.y < bounds.y) {
+            this.y = bounds.y;
+            if (vec.y < 0) vec.y *= -1;
+
+        } else if (this.y > bounds.bottom) {
+            this.y = bounds.bottom;
+            if (vec.y > 0) vec.y *= -1;
+        }
+    },
+
+    hitTest: function(p) {
+        if (this.distanceToSq(p) < 900) {
+            this._easeRadius = this.radius * 2.5;
+            return true;
+        }
+        return false;
+    },
+
+    startDrag: function() {
+        this.dragging = true;
+        this.vec.set(0, 0);
+        this._latestDrag = new Vector().set(this);
+    },
+
+    drag: function(p) {
+        this._latestDrag.set(this);
+        this.set(p);
+    },
+
+    endDrag: function() {
+        this.vec = Vector.sub(this, this._latestDrag);
+        this.dragging = false;
+    },
+
+    draw: function(ctx) {
+        ctx.save();
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this._currentRadius, 0, Math.PI * 2, false);
+        ctx.fill();
+        ctx.shadowBlur  = 20;
+        ctx.shadowColor = this.color;
+        ctx.fillStyle   = 'rgba(0, 0, 0, 1)';
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this._currentRadius, 0, Math.PI * 2, false);
+        ctx.fill();
+        ctx.restore();
+    }
+});
+
+
+/**
+ * Lightning
+ */
+function Lightning(startPoint, endPoint, step) {
+    this.startPoint = startPoint || new Vector();
+    this.endPoint   = endPoint || new Vector();
+    this.step       = step || 45;
+
+    this.children = [];
+}
+
+Lightning.prototype = {
+    color:         'rgba(255, 255, 255, 1)',
+    speed:         0.025,
+    amplitude:     1,
+    lineWidth:     5,
+    blur :         50,
+    blurColor:     'rgba(255, 255, 255, 0.5)',
+    points:        null,
+    off:           0,
+    _simplexNoise: new SimplexNoise(),
+    // Case by child
+    parent:        null,
+    startStep:     0,
+    endStep:       0,
+
+    length: function() {
+        return this.startPoint.distanceTo(this.endPoint);
+    },
+
+    getChildNum: function() {
+        return children.length;
+    },
+
+    setChildNum: function(num) {
+        var children = this.children, child,
+            i, len;
+
+        len = this.children.length;
+
+        if (len > num) {
+            for (i = num; i < len; i++) {
+                children[i].dispose();
+            }
+            children.splice(num, len - num);
+
+        } else {
+            for (i = len; i < num; i++) {
+                child = new Lightning();
+                child._setAsChild(this);
+                children.push(child);
+            }
+        }
+    },
+
+    update: function() {
+        var startPoint = this.startPoint,
+            endPoint   = this.endPoint,
+            length, normal, radian, sinv, cosv,
+            points, off, waveWidth, n, av, ax, ay, bv, bx, by, m, x, y,
+            children, child,
+            i, len;
+
+        if (this.parent) {
+            if (this.endStep > this.parent.step) {
+                this._updateStepsByParent();
+            }
+
+            startPoint.set(this.parent.points[this.startStep]);
+            endPoint.set(this.parent.points[this.endStep]);
+        }
+
+        length = this.length();
+        normal = Vector.sub(endPoint, startPoint).normalize().scale(length / this.step);
+        radian = normal.angle();
+        sinv   = Math.sin(radian);
+        cosv   = Math.cos(radian);
+
+        points    = this.points = [];
+        off       = this.off += random(this.speed, this.speed * 0.2);
+        waveWidth = (this.parent ? length * 1.5 : length) * this.amplitude;
+        if (waveWidth > 750) waveWidth = 750;
+
+        for (i = 0, len = this.step + 1; i < len; i++) {
+            n = i / 60;
+            av = waveWidth * this._noise(n - off, 0) * 0.5;
+            ax = sinv * av;
+            ay = cosv * av;
+
+            bv = waveWidth * this._noise(n + off, 0) * 0.5;
+            bx = sinv * bv;
+            by = cosv * bv;
+
+            m = Math.sin((Math.PI * (i / (len - 1))));
+
+            x = startPoint.x + normal.x * i + (ax - bx) * m;
+            y = startPoint.y + normal.y * i - (ay - by) * m;
+
+            points.push(new Vector(x, y));
+        }
+
+        children = this.children;
+
+        for (i = 0, len = children.length; i < len; i++) {
+            child = children[i];
+            child.color     = this.color;
+            child.speed     = this.speed * 1.35;
+            child.amplitude = this.amplitude;
+            child.lineWidth = this.lineWidth * 0.75;
+            child.blur      = this.blur;
+            child.blurColor = this.blurColor;
+            children[i].update();
+        }
+    },
+
+    draw: function(ctx) {
+        var points = this.points,
+            children = this.children,
+            i, len, p, d;
+
+        // Blur
+        if (this.blur) {
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+            ctx.fillStyle   = 'rgba(0, 0, 0, 1)';
+            ctx.shadowBlur  = this.blur;
+            ctx.shadowColor = this.blurColor;
+            ctx.beginPath();
+            for (i = 0, len = points.length; i < len; i++) {
+                p = points[i];
+                d = len > 1 ? p.distanceTo(points[i === len - 1 ? i - 1 : i + 1]) : 0;
+                ctx.moveTo(p.x + d, p.y);
+                ctx.arc(p.x, p.y, d, 0, Math.PI * 2, false);
+            }
+            ctx.fill();
+            ctx.restore();
+        }
+
+        ctx.save();
+        ctx.lineWidth = random(this.lineWidth, 0.5);
+        ctx.strokeStyle = this.color;
+        ctx.beginPath();
+        for (i = 0, len = points.length; i < len; i++) {
+            p = points[i];
+            ctx[i === 0 ? 'moveTo' : 'lineTo'](p.x, p.y);
+        }
+        ctx.stroke();
+        ctx.restore();
+
+        // Draw children
+        for (i = 0, len = this.children.length; i < len; i++) {
+            children[i].draw(ctx);
+        }
+    },
+
+    dispose: function() {
+        if (this._timeoutId) {
+            clearTimeout(this._timeoutId);
+        }
+        this._simplexNoise = null;
+    },
+
+    _noise: function(v) {
+        var octaves = 6,
+            fallout = 0.5,
+            amp = 1, f = 1, sum = 0,
+            i;
+
+        for (i = 0; i < octaves; ++i) {
+            amp *= fallout;
+            sum += amp * (this._simplexNoise.noise2D(v * f, 0) + 1) * 0.5;
+            f *= 2;
+        }
+
+        return sum;
+    },
+
+    _setAsChild: function(lightning) {
+        if (!(lightning instanceof Lightning)) return;
+        this.parent = lightning;
+
+        var self = this,
+            setTimer = function() {
+                self._updateStepsByParent();
+                self._timeoutId = setTimeout(setTimer, randint(1500));
+            };
+
+        self._timeoutId = setTimeout(setTimer, randint(1500));
+    },
+
+    _updateStepsByParent: function() {
+        if (!this.parent) return;
+        var parentStep = this.parent.step;
+        this.startStep = randint(parentStep - 2);
+        this.endStep   = this.startStep + randint(parentStep - this.startStep - 2) + 2;
+        this.step = this.endStep - this.startStep;
+    }
+};
+
+
+/**
+ * Rect
+ */
+function Rect(x, y, width, height) {
+    this.x = x || 0;
+    this.y = y || 0;
+    this.width  = width || 0;
+    this.height = height || 0;
+    this.right  = this.x + this.width;
+    this.bottom = this.y + this.height;
+}
+
+
+// Helpers
+
+function random(max, min) {
+    if (typeof max !== 'number') {
+        return Math.random();
+    } else if (typeof min !== 'number') {
+        min = 0;
+    }
+    return Math.random() * (max - min) + min;
+}
+
+
+function randint(max, min) {
+    if (!max) return 0;
+    return random(max + 1, min) | 0;
+}
+
+
+
+// Initialize
+
+(function() {
+
+    // Vars
+
+    var canvas, context,
+        centerX, centerY, grad,
+        mouse,
+        bounds,
+        points,
+        lightning,
+        gui, control;
+
+
+    // Event Listeners
+
+    function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        centerX = canvas.width * 0.5;
+        centerY = canvas.height * 0.5;
+        context = canvas.getContext('2d');
+        grad = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.sqrt(centerX * centerX + centerY * centerY));
+        grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
+    }
+
+    function mouseMove(e) {
+        mouse.set(e.clientX, e.clientY);
+
+        var i, hit = false;
+        for (i = 0; i < 2; i++) {
+            if ((!hit && points[i].hitTest(mouse)) || points[i].dragging)
+                hit = true;
+        }
+        document.body.style.cursor = hit ? 'pointer' : 'default';
+    }
+
+    function mouseDown(e) {
+        for (var i = 0; i < 2; i++) {
+            if (points[i].hitTest(mouse)) {
+                points[i].startDrag();
+                return;
+            }
+        }
+    }
+
+    function mouseUp(e) {
+        for (var i = 0; i < 2; i++) {
+            if (points[i].dragging)
+                points[i].endDrag();
+        }
+    }
+
+
+    // GUI Control
+
+    control = {
+        childNum: 3,
+        color: [255, 255, 255],
+        backgroundColor: '#0b5693'
+    };
+
+
+    // Init
+
+    canvas = document.getElementById('c');
+
+    window.addEventListener('resize', resize, false);
+    resize(null);
+
+    bounds = new Rect(0, 0, canvas.width, canvas.height);
+    mouse  = new Vector();
+
+    lightning = new Lightning();
+
+    points = [
+        new Point(centerX - 200, centerY, lightning.lineWidth * 1.25),
+        new Point(centerX + 200, centerY, lightning.lineWidth * 1.25)
+    ];
+
+    lightning.startPoint.set(points[0]);
+    lightning.endPoint.set(points[1]);
+    lightning.setChildNum(3);
+
+    canvas.addEventListener('mousemove', mouseMove, false);
+    canvas.addEventListener('mousedown', mouseDown, false);
+    canvas.addEventListener('mouseup', mouseUp, false);
+
+
+    // GUI
+
+    gui = new dat.GUI();
+    gui.add(lightning, 'amplitude', 0, 2).name('Amplitude');
+    gui.add(lightning, 'speed', 0, 0.1).name('Speed');
+    gui.add(control, 'childNum', 0, 10).step(1).name('Child Num').onChange(function() {
+        lightning.setChildNum(control.childNum | 0);
+    });
+    gui.addColor(control, 'color').name('Color').onChange(function() {
+        var c = control.color;
+        var r = (c[0] || 0) | 0, g = (c[1] || 0) | 0, b = (c[2] || 0) | 0,
+            i, len;
+
+        lightning.color     = 'rgb(' + r + ',' + g + ',' + b + ')';
+        lightning.blurColor = 'rgba(' + r + ',' + g + ',' + b + ', 0.5)';
+        for (i = 0, len = points.length; i < len; i++) {
+            points[i].color = lightning.color;
+        }
+    });
+    gui.add(lightning, 'lineWidth', 1, 10).name('Line Width').onChange(function() {
+        for (var i = 0, len = points.length; i < len; i++) {
+            points[i].radius = lightning.lineWidth * 1.25;
+        }
+    });
+    gui.add(lightning, 'blur', 0, 100).name('Blur');
+    gui.addColor(control, 'backgroundColor').name('Background');
+    gui.close();
+
+
+    // Start Update
+
+    var loop = function() {
+        context.save();
+        context.fillStyle = control.backgroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = grad;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.restore();
+
+        lightning.startPoint.set(points[0]);
+        lightning.endPoint.set(points[1]);
+        lightning.step = Math.ceil(lightning.length() / 10);
+        if (lightning.step < 5) lightning.step = 5;
+
+        lightning.update();
+        lightning.draw(context);
+
+        var i, p;
+
+        for (i = 0; i < 2; i++) {
+            p = points[i];
+            if (p.dragging) p.drag(mouse);
+            p.update(points, bounds);
+            p.draw(context);
+        }
+
+        requestAnimationFrame(loop);
+    };
+    loop();
+
+})();
+</script>
+
 </body>
 </html>
