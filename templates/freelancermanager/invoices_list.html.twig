@@ -1,0 +1,70 @@
+{% extends 'InoFreelancerManager.html.twig' %}
+
+  {% block body %}
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active h3" aria-current="page">
+            <i class="fa-solid fa-file-invoice-dollar fa-fw"></i> Factures
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="row mb-2">
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path("fl_invoices_form") }}'">
+        <i class="fa-solid fa-plus"></i> Créer une nouvelle facture
+      </button>
+    </div>
+  
+    <div class="col-auto">
+      <select name="F_TYPE" id="f_type" class="form-select fl_filter">
+        <option value="">Afficher toutes</option>
+        {% for i, it in INVOICE_TYPES %}
+          <option value="{{ i }}"{% if F_TYPE|default(-1) == i %} selected{% endif %}>Seulement {{ it }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  
+    <div class="col-auto">
+      <select name="F_PAID" id="f_paid" class="form-select fl_filter">
+        <option value="">Afficher toutes</option>
+        <option value="0"{% if F_PAID == "0" %} selected{% endif %}>Seulement impayées</option>
+        <option value="1"{% if F_PAID == "1" %} selected{% endif %}>Seulement payées</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12 table-responsive">
+      <table class="table table-sm table-striped table-hover" id="tbl_fl_invoices">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Numéro de facture</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th>Type de facture</th>
+            <th>Montant</th>
+            <th class="text-center">Payée ?</th>
+            <th class="text-center">PDF</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endblock %}
+  
+  {% block javascripts %}
+  <script>
+    var ajaxUrl = "{{ path("fl_invoices_ajax") }}";
+    var blobUrl = "{{ path("fl_invoices_dl") }}";
+  </script>
+  <script src="{{ asset("js/GenuisPro360°/invoices_list.js") }}"></script>
+  {% endblock %}
+  

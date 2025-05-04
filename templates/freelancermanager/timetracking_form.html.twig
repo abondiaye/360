@@ -1,0 +1,206 @@
+{% extends 'InoFreelancerManager.html.twig' %}
+
+  {% block body %}
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h3" aria-current="page">
+            <a href="{{ path("fl_time_form") }}"><i class="fa-solid fa-clock fa-fw"></i> Saisie du temps</a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col d-flex align-items-center fw-bold">
+              {{ CURRENT_DATE|format_datetime('full','none') }}
+            </div>
+            <div class="col text-end">
+              <a href="{{ path("fl_time_form") }}" class="btn btn-outline-secondary" title="Revenir à aujourd'hui">
+                <i class="fa-solid fa-calendar-xmark"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="card-body">
+          <form method="post" action="{{ path("fl_time_save") }}" id="frm_timecollect">
+            <input type="hidden" name="entryid" id="entryid" value="{{ ENTRY.id|default(0) }}">
+            <input type="hidden" name="cdate" id="cdate" value="{{ CURRENT_DATE|date('Y-m-d') }}">
+  
+            <div class="form-floating">
+              <select class="form-select" id="RefProjectId" name="RefProjectId" required="required">
+                <option value="">--- Veuillez choisir ---</option>
+                {% for p in PROJECTS_LIST %}
+                  <option value="{{ p.id }}"{% if ENTRY.refProject.id is defined and p.id == ENTRY.refProject.id %} selected{% endif %}>
+                    {{ p.projectName }} ({{ p.refCustomer.name }})
+                  </option>
+                {% endfor %}
+              </select>
+              <label for="RefProjectId">Projet</label>
+            </div>
+  
+            <div class="row mt-3">
+              <div class="col-xxl-3 col-md-6 col-12">
+                <div class="input-group">
+                  <span class="input-group-text">Durée :</span>
+                  <input type="text" class="form-control text-end" placeholder="Heures" name="HH" id="hh" value="{{ DURATION_HH }}">
+                  <span class="input-group-text">:</span>
+                  <input type="text" class="form-control" placeholder="Minutes" name="MM" id="mm" value="{{ DURATION_MM }}">
+                </div>
+              </div>
+  
+              <div class="col-auto d-flex align-items-center text-muted">ou :</div>
+  
+              <div class="col-auto">
+                <label for="st" class="col-form-label">Heure de début :</label>
+              </div>
+              <div class="col-auto">
+                <input type="time" class="form-control" name="ST" id="st" value="{{ START_TIME }}">
+              </div>
+              <div class="col-auto">
+                <label for="et" class="col-form-label">Heure de fin :</label>
+              </div>
+              <div class="col-auto">
+                <input type="time" class="form-control" name="ET" id="et" value="{{ END_TIME }}">
+              </div>
+            </div>
+  
+            <div class="row mt-3">
+              <div class="col">
+                <div class="form-floating">
+                  <textarea class="form-control" name="wdesc" id="description" style="height: 100px;">{{ ENTRY.workDescription }}</textarea>
+                  <label for="description">Description de l’activité</label>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row mt-3">
+              <div class="col">
+                <button type="button" class="btn btn-primary btn_time_save">
+                  <i class="far fa-save"></i> Enregistrer
+                </button>
+  
+                {% if ENTRY.id|default(0) %}
+                  <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path("fl_time_form",{'date':CURRENT_DATE|date('Y-m-d')}) }}'">
+                    <i class="far fa-plus"></i> Nouvel enregistrement
+                  </button>
+                  <button type="button" class="btn btn-danger btn_time_del">
+                    <i class="fas fa-trash"></i> Supprimer
+                  </button>
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+  
+      {% if TODAY_ENTRIES|length %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            {% if TODAY_ENTRIES|length == 1 %}
+              1 enregistrement aujourd'hui
+            {% else %}
+              {{ TODAY_ENTRIES|length }} enregistrements aujourd'hui
+            {% endif %}
+          </h5>
+  
+          <table class="table table-sm table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Client</th>
+              <th>Projet</th>
+              <th class="text-center">Durée</th>
+              <th class="text-end">Gains</th>
+              <th>Description</th>
+            </tr>
+            </thead>
+  
+            <tbody>
+            {% for t in TODAY_ENTRIES %}
+            <tr>
+              <td><a href="{{ path("fl_time_edit",{'id':t.id}) }}">{{ t.customer_name }}</a></td>
+              <td><a href="{{ path("fl_time_edit",{'id':t.id}) }}">{{ t.project_name }}</a></td>
+              <td class="text-center">
+                <a href="{{ path("fl_time_edit",{'id':t.id}) }}">
+                  {% if t.record_type == constant('App\\Entity\\FlProjectEntries::RT_PROJECT_ENTRY') %}
+                    {{ t.work_time_in_secs|formatWorkTime }}
+                  {% elseif t.record_type == constant('App\\Entity\\FlProjectEntries::RT_TRAVEL_ALLOWANCE') %}
+                    <small>Frais de déplacement</small>
+                  {% endif %}
+                </a>
+              </td>
+              <td class="text-end">{{ t.salary|format_currency('EUR') }}</td>
+              <td><a href="{{ path("fl_time_edit",{'id':t.id}) }}">{{ t.work_description }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+  
+            <tfoot>
+            <tr>
+              <td colspan="2" class="text-end fw-bold">Total :</td>
+              <td class="text-center fw-bold">{{ TODAY_TIME|formatWorkTime }}</td>
+              <td class="text-end fw-bold">{{ TODAY_SUM|format_currency('EUR') }}</td>
+            </tr>
+            </tfoot>
+  
+          </table>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  
+    <div class="col-3">
+      {% for year,m in CALENDAR %}
+        {% for mon,cal in m %}
+        <table class="table table-sm table-bordered">
+          <caption>{{ "%04d-%02d-01"|format(year,mon)|format_date(pattern='MMMM Y') }}</caption>
+          <thead>
+          <tr>
+            <th>Sem</th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th>
+          </tr>
+          </thead>
+  
+          <tbody>
+          {% for r in cal %}
+            <tr>
+            {% for i,d in r %}
+              {% if i > 0 %}
+                {% set day = d|calcClasses(year,mon,EVENTS) %}
+              {% else %}
+                {% set day = {"CSS_CLASSES":"","DAY":""} %}
+              {% endif %}
+              <td class="text-center{{ day['CSS_CLASSES'] }}">
+                {% if i > 0 %}
+                  <a href="{{ path("fl_time_form",{'date':day['DAY']}) }}" class="{{ day['CSS_CLASSES'] }}" title="Aller au {{ day['DAY']|format_date }}">{{ d }}</a>
+                {% else %}
+                  {{ d }}
+                {% endif %}
+              </td>
+            {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+  
+        </table>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  
+  <form method="post" action="{{ path("fl_time_delete") }}" id="frm_time_del">
+    <input type="hidden" name="ENTRYID" value="{{ ENTRY.id|default(0) }}">
+  </form>
+  {% endblock %}
+  
+  {% block javascripts %}
+  <script src="{{ asset("js/fl_time_tracking.js") }}"></script>
+  {% endblock %}
+  

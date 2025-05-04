@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Projet - GeniusPro360°{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h1 class="mb-4">Ajouter un nouveau projet</h1>
+
+  <form method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nom du projet</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="client" class="form-label">Nom du client</label>
+      <input type="text" class="form-control" id="client" name="client" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select class="form-select" id="status" name="status" required>
+        <option value="Actif">Actif</option>
+        <option value="Terminé">Terminé</option>
+        <option value="En pause">En pause</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Ajouter</button>
+  </form>
+</div>
+{% endblock %}

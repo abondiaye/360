@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur GeniusPro360°{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Bienvenue sur GeniusPro360°</h1>
+
+        <p class="text-center">Votre expert en IT et développement web à portée de clic.</p>
+
+        <div class="row text-center mt-5">
+            <div class="col-md-4">
+                <h3>Services</h3>
+                <p>Assistance informatique, développement web et plus.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Portfolio</h3>
+                <p>Découvrez mes réalisations et projets.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Contact</h3>
+                <p>Discutez de vos projets ou demandez un devis personnalisé.</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark">
+                Retour au site
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="mt-5">
+        <p class="text-center">&copy; 2023 GeniusPro360° - Tous droits réservés</p>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/homepage.js') }}"></script>
+{% endblock %}

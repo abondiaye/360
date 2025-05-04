@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Portfolio - GeniusPro360°{% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/portfolio.css') }}">
+    {% endblock %}    
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Bienvenue sur mon portfolio</h1>
+
+    <section class="mb-5">
+        <h2>Qui suis-je ?</h2>
+        <p>Je suis <strong>Abdoulaye N'diaye</strong>, technicien informatique depuis 2010 et développeur web Symfony / PHP / Vue.js. J'accompagne les particuliers et professionnels pour leurs besoins informatiques et web.</p>
+    </section>
+
+    <section class="mb-5">
+        <h2>Mes services</h2>
+        <ul>
+            <li><strong>Assistance informatique :</strong> installation, résolution de pannes, maintenance.</li>
+            <li><strong>Développement Web :</strong> sites vitrines, e-commerce, applications Symfony/Vue.js.</li>
+            <li><strong>Support à distance :</strong> diagnostic, accompagnement technique.</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h2>Tarifs</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr><th>Prestation</th><th>Prix</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Intervention à domicile / sur site</td><td>80 € / heure</td></tr>
+                <tr><td>Création site vitrine</td><td>à partir de 600 €</td></tr>
+                <tr><td>Création boutique e-commerce</td><td>à partir de 1 200 €</td></tr>
+                <tr><td>Support technique à distance</td><td>40 € / heure</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="mb-5">
+        <h2>Me contacter</h2>
+        <p>Vous souhaitez discuter d'un projet ou demander un devis ? <a href="mailto:a_ndiaye@outlook.com">Envoyez-moi un email</a>.</p>
+    </section>
+</div>
+<a href="{{ path('homepage') }}" class="btn btn-outline-dark mb-3">
+    Retour au site
+</a>
+
+
+{% endblock %}

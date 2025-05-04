@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un projet{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Modifier le projet : {{ project.title }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.active) }}
+        {{ form_row(form.createdOn) }}
+
+        <button class="btn btn-primary mt-3">Enregistrer</button>
+        <a href="{{ path('admin_projects') }}" class="btn btn-secondary mt-3">Retour</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

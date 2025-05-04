@@ -1,0 +1,39 @@
+<h1>Relevé de compte pour {{ ACCOUNT_NUMBER }}</h1>
+Catégorie : "{{ F_CATEGORY }}", 
+ Période : {{ F_MONTH }} {{ F_YEAR }}
+
+<p>{{ DATA_COUNT|format_number }} opérations | Revenus : <span class="{{ REVENUE['INCOME']|MoneyColor }}">{{ REVENUE['INCOME']|format_currency('EUR') }}</span> | Dépenses : <span class="{{ REVENUE['OUTCOME']|MoneyColor }}">{{ REVENUE['OUTCOME']|format_currency('EUR') }}</span> | Différence : <span class="{{ REVENUE['DIFF']|MoneyColor }}">{{ REVENUE['DIFF']|format_currency('EUR') }}</span></p>
+
+<p>&nbsp;</p>
+
+<table cellpadding="2" cellspacing="1">
+<thead>
+<tr>
+  <th width="55" style="border-bottom: 1px solid #000000;"><b>Date</b></th>
+  <th width="100" style="border-bottom: 1px solid #000000;"><b>Catégorie</b></th>
+  <th width="270" style="border-bottom: 1px solid #000000;"><b>Description</b></th>
+  <th width="70" style="border-bottom: 1px solid #000000; text-align: right;"><b>Montant</b></th>
+</tr>
+</thead>
+<tbody>
+{% for d in DATA %}
+  {% if loop.index0 % 2 %}
+    {% set row_color = '#ffffff' %}
+  {% else %}
+    {% set row_color = '#dedede' %}
+  {% endif %}
+<tr style="background-color: {{ row_color }};">
+  <td width="55">{{ d['dt'] }}</td>
+  <td width="100">
+    {% if d['catid'] %}
+      {{ d['category_name'] }}
+    {% else %}
+      <b>Pas de catégorie</b>
+    {% endif %}
+  </td>
+  <td width="270">{{ d['description'] }}</td>
+  <td width="70" style="text-align: right; padding: 2px;">{{ d['amount']|format_currency('EUR') }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>

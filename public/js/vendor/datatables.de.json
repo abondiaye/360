@@ -1,0 +1,45 @@
+{
+	"sEmptyTable":   	"Aucune donnée disponible dans le tableau",
+	"sInfo":         	"Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+	"sInfoEmpty":    	"Aucune donnée disponible",
+	"sInfoFiltered": 	"(filtré de _MAX_ entrées au total)",
+	"sInfoPostFix":  	"",
+	"sInfoThousands":  	" ",
+	"sLengthMenu":   	"Afficher _MENU_ entrées",
+	"sLoadingRecords": 	"Chargement en cours...",
+	"sProcessing":   	"Veuillez patienter...",
+	"sSearch":       	"Rechercher",
+	"sZeroRecords":  	"Aucun enregistrement correspondant trouvé",
+	"oPaginate": {
+		"sFirst":    	"Premier",
+		"sPrevious": 	"Précédent",
+		"sNext":     	"Suivant",
+		"sLast":     	"Dernier"
+	},
+	"oAria": {
+		"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+		"sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+	},
+	"select": {
+    	"rows": {
+			"_": "%d lignes sélectionnées",
+			"0": "",
+			"1": "1 ligne sélectionnée"
+	    }
+	},
+	"buttons": {
+		"print":	"Imprimer",
+		"colvis":	"Colonnes",
+		"copy":		"Copier",
+		"copyTitle":	"Copier dans le presse-papiers",
+		"copyKeys":	"Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau.<br><br>Pour annuler, cliquez sur ce message ou appuyez sur Échap.",
+		"copySuccess": {
+			"_": "%d lignes copiées",
+			"1": "1 ligne copiée"
+		},
+		"pageLength": {
+			"-1": "Afficher toutes les lignes",
+			"_":  "Afficher %d lignes"
+		}
+	}
+}

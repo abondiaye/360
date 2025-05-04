@@ -1,0 +1,114 @@
+{% extends 'InoFreelancerManager.html.twig' %}
+
+  {% block body %}
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active h3" aria-current="page">
+            <i class="fa-solid fa-user-group fa-fw"></i> Projets
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="row mb-2">
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path("fl_projects_form") }}'">
+        <i class="fa-solid fa-plus"></i> Créer un nouveau projet
+      </button>
+    </div>
+  
+    <div class="col-auto">
+      <select name="F_ACTIVE" id="f_active" class="form-select fl_filter">
+        <option value="">Afficher tous</option>
+        <option value="0"{% if F_STATUS == "0" %} selected{% endif %}>Seulement actifs</option>
+        <option value="1"{% if F_STATUS == "1" %} selected{% endif %}>Seulement inactifs</option>
+      </select>
+    </div>
+  
+    <div class="col-auto">
+      <select name="F_REPORTING" id="f_reporting" class="form-select fl_filter">
+        <option value="">Afficher tous</option>
+        <option value="false"{% if F_REPORTING == "false" %} selected{% endif %}>Comptabilisés</option>
+        <option value="true"{% if F_REPORTING == "true" %} selected{% endif %}>Non comptabilisés</option>
+      </select>
+    </div>
+  
+    <div class="col-auto">
+      <select name="F_CUSTOMER" id="f_customer" class="form-select fl_filter">
+        <option value="">Tous les clients</option>
+        {% for c in CUSTOMER_LIST %}
+          <option value="{{ c.id }}"{% if F_CUSTOMER == c.id %} selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12 table-responsive">
+      <table class="table table-sm table-striped table-hover" id="tbl_fl_projects">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nom du projet</th>
+            <th>Client</th>
+            <th>Statut</th>
+            <th class="text-center">Comptabilisé ?</th>
+            <th class="text-end">Taux horaire</th>
+            <th>Devise</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endblock %}
+  
+  {% block javascripts %}
+  <script>
+    var formurl = "{{ path("fl_projects_form") }}";
+  
+    var dtable  = $("#tbl_fl_projects").DataTable({
+      columnDefs: [
+        { className: "td_edit", targets: [0,1,2,3,4] },
+        { className: "td_edit text-center", targets: [4] },
+        { className: "td_edit text-end", targets: [5] }
+      ],
+      order: [[2, 'desc']],
+      "processing": true,
+      'serverSide': true,
+      ajax: {
+        url: '{{ path("fl_projects_ajax") }}',
+        "data": function (d) {
+          d.F_STATUS    = $('#f_active').val();
+          d.F_REPORTING = $('#f_reporting').val();
+          d.F_CUSTOMER  = $('#f_customer').val();
+        }
+      },
+      "stateSave": true,
+      "stateDuration": 0,
+      "fnInitComplete": function() {
+        this.fnAdjustColumnSizing(true);
+      },
+    });
+  
+    // Clic sur une cellule pour éditer le projet
+    $('#tbl_fl_projects tbody').on('click', 'td', function () {
+      var data = dtable.cell(this).data();
+      if (Array.isArray(data) === true) {
+        return;
+      }
+      var row = dtable.row(dtable.cell(this).index().row).data();
+      window.location.href = formurl + "/" + row[0];
+    });
+  
+    // Rafraîchir en fonction des filtres
+    $(".fl_filter").on('change', function() {
+      dtable.ajax.reload(null,false);
+    });
+  </script>
+  {% endblock %}
+  

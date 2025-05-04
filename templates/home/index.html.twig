@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue chez GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="hero text-center">
+        <h1>Bienvenue sur GeniusPro360°</h1>
+        <p>Technicien Freelance en Informatique</p>
+        <div class="mt-4">
+            <a href="{{ path('admin_login') }}" class="btn btn-primary">Connexion Admin</a>
+            <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark">Voir mon portfolio</a>
+            <a href="{{ path('homepage') }}" class="btn btn-secondary">Visiter le site</a>
+        </div>
+
+        <div class="mt-5">
+            <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark mb-3">
+                Retour au site
+            </a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/home.js') }}"></script>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <p>&copy; 2023 GeniusPro360° - Tous droits réservés</p>
+    </footer>
+{% endblock %}

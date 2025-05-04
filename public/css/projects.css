@@ -1,0 +1,86 @@
+/* Ajoute une animation pour les lignes de tableau */
+table tbody tr {
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+}
+
+table tbody tr:hover {
+  transform: scale(1.05);
+  background-color: #f8f9fa; /* Light gray background on hover */
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: center;
+}
+
+table th {
+  background-color: #343a40;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Style les boutons pour un effet moderne */
+.btn {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #007bff;
+  transform: scale(1.05);
+}
+
+.btn-info {
+  background-color: #17a2b8;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+/* Ajouter des bordures animées aux cellules */
+table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+th, td {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.container {
+  background-color: #212529;
+  color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #e1c16e; /* Gold */
+  text-align: center;
+}
+
+/* Pour l'animation du bouton "Ajouter un projet" */
+.btn-primary {
+  background-color: #e1c16e;
+  color: #212529;
+  transition: transform 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: scale(1.1);
+  background-color: #ffd700; /* Gold color for hover */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  table, .btn {
+    font-size: 14px;
+  }
+}

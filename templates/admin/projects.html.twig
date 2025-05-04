@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Projets - GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/projects.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h1 class="mb-4">Gestion des Projets</h1>
+
+  <a href="{{ path('admin_add_project') }}" class="btn btn-primary mb-3">➕ Ajouter un projet</a>
+
+  <!-- Filtrage des projets -->
+  <div class="mb-3">
+    <form method="get" action="{{ path('admin_projects') }}">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="statusFilter">Filtrer par statut</label>
+          <select name="status" id="statusFilter" class="form-control">
+            <option value="">Tous</option>
+            <option value="{{ constant('App\\Entity\\FlProjects::PROJ_STATUS_ACTIVE') }}" {% if app.request.get('status') == constant('App\\Entity\\FlProjects::PROJ_STATUS_ACTIVE') %}selected{% endif %}>Actif</option>
+            <option value="{{ constant('App\\Entity\\FlProjects::PROJ_STATUS_INACTIVE') }}" {% if app.request.get('status') == constant('App\\Entity\\FlProjects::PROJ_STATUS_INACTIVE') %}selected{% endif %}>Inactif</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-outline-dark mt-4">Filtrer</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Nom du projet</th>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Date de création</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+        <tr>
+          <td>{{ project.projectName }}</td>
+          <td>{{ project.refCustomer.name }}</td>
+          <td>
+            {% if project.status == constant('App\\Entity\\FlProjects::PROJ_STATUS_ACTIVE') %}
+              ✅ Actif
+            {% else %}
+              ❌ Inactif
+            {% endif %}
+          </td>
+          <td>{{ project.createdOn|date('d/m/Y') }}</td>
+          <td>
+            <a href="{{ path('admin_edit_project', {'id': project.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
+            <a href="{{ path('admin_delete_project', {'id': project.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">Supprimer</a>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="5" class="text-center">Aucun projet trouvé.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center">
+    {{ knp_pagination_render(projects) }}
+  </div>
+
+  <!-- Bouton Retour -->
+  <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-secondary mb-3">⬅ Retour</a>
+
+</div>
+{% endblock %}

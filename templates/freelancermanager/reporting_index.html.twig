@@ -1,0 +1,189 @@
+{% extends 'InoFreelancerManager.html.twig' %}
+
+  {% block body %}
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item h3" aria-current="page">
+            <a href="{{ path("fl_report_index") }}">
+              <i class="fa-solid fa-chart-line fa-fw"></i> Rapports
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <form method="get" action="#" id="frm_fl_report_tools">
+            <div class="form-floating mb-4">
+              <select name="fl_report" id="fl_report" class="form-select">
+                <option value=""></option>
+                <option value="{{ path("fl_report_by_project") }}">Par projet sur une période</option>
+              </select>
+              <label for="fl_report">Choisir un rapport</label>
+            </div>
+          </form>
+          <p class="mb-0 pb-0 pt-2">Chiffre d'affaires {{ "now"|date("Y") }}</p>
+          <h4>{{ SAL_YEAR|format_currency('EUR') }} ({{ WORKTIME_YEAR|formatWorkTimeLocalized }})</h4>
+          <hr>
+          <p class="mb-0 pb-0 pt-2">Chiffre d'affaires {{ CURRENT_MONTH }}</p>
+          <h4>{{ SAL_MONTH|format_currency('EUR') }} ({{ WORKTIME_MONTH|formatWorkTimeLocalized }})</h4>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <table class="table table-sm table-striped table-hover">
+            <caption>Résumé</caption>
+            <tbody>
+              <tr>
+                <td>Utilisateur :</td>
+                <td class="text-end">{{ app.user.firstName }} {{ app.user.lastName }}</td>
+              </tr>
+              <tr>
+                <td>Entreprise :</td>
+                <td class="text-end">
+                  {% if CONFIG.companyName is defined %}
+                    {{ CONFIG.companyName }}
+                  {% else %}
+                    <a href="{{ path("fl_configuration_form") }}" class="text-danger">Aucune configuration !</a>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <td>Projets :</td>
+                <td class="text-end">{{ OVERVIEW['projects']|format_number }}</td>
+              </tr>
+              <tr>
+                <td>Clients :</td>
+                <td class="text-end">{{ OVERVIEW['customers']|format_number }}</td>
+              </tr>
+              <tr>
+                <td>Entrées :</td>
+                <td class="text-end">{{ OVERVIEW['entries']|format_number }}</td>
+              </tr>
+              <tr>
+                <td>Entrées de / à :</td>
+                <td class="text-end">{{ OVERVIEW['firstentry'] }} - {{ OVERVIEW['lastentry'] }}</td>
+              </tr>
+              <tr>
+                <td>Période d'enregistrement :</td>
+                <td class="text-end">{{ OVERVIEW['myrange'] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <table class="table table-sm table-striped table-hover">
+            <caption>Statistiques globales</caption>
+            <tbody>
+              <tr>
+                <td>Temps de travail total :</td>
+                <td class="text-end">{{ TOTALS['total_seconds']|formatWorkTimeLocalized }}</td>
+              </tr>
+              <tr>
+                <td>Revenus totaux :</td>
+                <td class="text-end">{{ TOTALS['total_salary']|format_currency('EUR') }}</td>
+              </tr>
+              <tr>
+                <td>Taux horaire moyen :</td>
+                <td class="text-end">{{ TOTALS['AVG_HOURLY_RATE']|format_currency('EUR') }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xl-6 col-12 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-sm table-striped table-hover">
+            <caption>Top 10 projets par temps de travail</caption>
+            <thead>
+              <tr>
+                <th>Nom du projet</th>
+                <th>Client</th>
+                <th class="text-end">Temps total</th>
+                <th class="text-end">Revenus</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in TOP_TIME %}
+                <tr>
+                  <td>{{ s.project_name }}</td>
+                  <td>{{ s.customer_name }}</td>
+                  <td class="text-end">{{ s.totsecs|formatWorkTimeLocalized }}</td>
+                  <td class="text-end">{{ s.salary|format_currency('EUR') }}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="4">Aucune donnée disponible !</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-6 col-12 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-sm table-striped table-hover">
+            <caption>Top 10 projets par revenus</caption>
+            <thead>
+              <tr>
+                <th>Nom du projet</th>
+                <th>Client</th>
+                <th class="text-end">Temps total</th>
+                <th class="text-end">Revenus</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in TOP_PAYED %}
+                <tr>
+                  <td>{{ s.project_name }}</td>
+                  <td>{{ s.customer_name }}</td>
+                  <td class="text-end">{{ s.totsecs|formatWorkTimeLocalized }}</td>
+                  <td class="text-end">{{ s.salary|format_currency('EUR') }}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="4">Aucune donnée disponible !</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  
+  {% block javascripts %}
+  <script>
+  $("#fl_report").on('change', function() {
+    let url = $(this).val();
+    if(url !== "")
+    {
+      window.location.href = url;
+    }
+  });
+  </script>
+  {% endblock %}
+  

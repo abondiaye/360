@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}Ino-Tool {{ APP_VERSION }}{% endblock %}</title>
+  <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}"/>
+  <link href="{{ asset('css/vendor/bootstrap.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset("css/vendor/select2.min.css") }}" rel="stylesheet" />
+  <link href="{{ asset('css/vendor/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/vendor/all.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('css/vendor/datatables.min.css')}}" rel="stylesheet" />
+  <link href="{{ asset('css/vendor/jquery.toast.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+  {% block stylesheets %}{% endblock %}
+</head>
+<body{% block body_classes %}{% endblock %}>
+{% block navbar_top %}{% endblock %}
+{% block navbar_side %}{% endblock %}
+{% block body_before %}{% endblock %}
+{% block body %}{% endblock %}
+{% block body_after %}{% endblock %}
+<script>
+  var JS_DIR="{{ asset("js") }}";
+  var APP_LANG="{{ app.request.locale }}";
+</script>
+<script src="{{ asset('js/vendor/jquery-3.6.3.min.js') }}" ></script>
+<script src="{{ asset('js/vendor/bootstrap.bundle.min.js') }}" ></script>
+<script src="{{ asset('js/vendor/datatables.min.js') }}" ></script>
+<script src="{{ asset('js/vendor/sweetalert2.all.min.js') }}" ></script>
+<script src="{{ asset('js/vendor/select2.full.min.js') }}" ></script>
+<script src="{{ asset('js/vendor/i18n/de.js') }}"></script>
+<script src="{{ asset('js/vendor/jquery.toast.min.js') }}"></script>
+<script src="{{ asset('js/vendor/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/vendor/additional-methods.min.js') }}"></script>
+<script src="{{ asset('js/vendor/luxon.min.js') }}"></script>
+<script src="{{ asset('js/globals.js') }}"></script>
+{% block javascripts %}{% endblock %}
+{% block js_refresh %}{% endblock %}
+{% block toasts %}{% endblock %}
+<div class="mt-5">&nbsp;</div>
+{# Global modal dialog #}
+<div class="modal fade" id="globalModal" tabindex="-1" aria-labelledby="globalModalLabel" aria-hidden="true" data-entriesyyyymm="{{ path("fl_report_ajax_entries_yyyymm") }}">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="globalModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="globalModalBody">
+      </div>
+      <div class="modal-footer" id="globalModalFooter">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

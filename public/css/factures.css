@@ -1,0 +1,55 @@
+/* Style général de la page de gestion des factures */
+.container {
+  background-color: #212529; /* Dark background */
+  color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Style du titre de la page */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #e1c16e; /* Gold */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Style du paragraphe d'introduction */
+.lead {
+  font-size: 1.2rem;
+  color: #f8f9fa;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Style du bouton Retour */
+.btn-outline-secondary {
+  border-color: #e1c16e; /* Gold border */
+  color: #e1c16e; /* Gold text */
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+  padding: 8px 20px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e1c16e; /* Gold background on hover */
+  color: #212529; /* Dark text */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+}

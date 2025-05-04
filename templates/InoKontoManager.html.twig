@@ -1,0 +1,63 @@
+{% extends 'InoSession.html.twig' %}
+{% block navbar_title %}Gestionnaire de Comptes{% endblock %}
+{% block navbar_side %}
+  {% set naventries = {
+    'home':'',
+    'bank':'',
+    'list':'',
+    'import':'',
+    'categories':'',
+    'report':'',
+    'add':'',
+    'filter':'',
+  } %}
+  {% if ACTNAV is not defined %}
+    {% set naventries = set_element(naventries,'home','active') %}
+  {% else %}
+    {% if naventries[ACTNAV] is not defined %}
+      <div class="alert alert-danger" role="alert">
+        Tag de navigation inconnu "{{ ACTNAV }}" - VÉRIFIEZ VOTRE CODE !
+      </div>
+    {% else %}
+      {% set naventries = set_element(naventries,ACTNAV,'active') %}
+    {% endif %}
+  {% endif %}
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-3 col-xl-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link {{ naventries['home'] }}" href="{{ path("km_index") }}"><i class="fa-solid fa-gauge-high fa-fw"></i> Tableau de bord</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['bank'] }}" href="{{ path("km_bank") }}"><i class="fa-solid fa-bank fa-fw"></i> Gérer les comptes bancaires</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['list'] }}" href="{{ path("km_list") }}"><i class="fa-solid fa-list fa-fw"></i> Voir les comptes</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['import'] }}" href="{{ path("km_csvImport") }}"><i class="fa-solid fa-file-import fa-fw"></i> Importer des données CSV</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['categories'] }}" href="{{ path("km_categories") }}"><i class="fa-solid fa-pen-to-square fa-fw"></i> Modifier les catégories</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['report'] }}" href="{{ path("km_report_overview") }}"><i class="fa-solid fa-chart-line fa-fw"></i> Rapports et analyses</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['add'] }}" href="{{ path("km_accForm",{'id':0}) }}"><i class="fa-solid fa-square-plus fa-fw"></i> Ajouter une opération</a></li>
+          <li class="nav-item"><a class="nav-link {{ naventries['filter'] }}" href="{{ path("km_importfilter") }}"><i class="fa-solid fa-filter fa-fw"></i> Modifier les filtres d'import</a></li>
+        </ul>
+        <hr>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ path("home") }}"><i class="fa-solid fa-home fa-fw"></i> Retour à l'accueil</a></li>
+          <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ path("app_logout") }}"><i class="fa-solid fa-power-off fa-fw"></i> Déconnexion</a></li>
+        </ul>
+      </div>
+    </nav>
+{% endblock %}
+{% block body_before %}
+    <main class="col-md-9 col-lg-9 col-xl-10 ms-sm-auto px-md-4 mt-4">
+{% endblock %}
+{% block body_after %}
+    </main>
+  </div>
+</div>
+{% endblock %}
+{% block body %}
+  <div class="container">
+    <h1>Gestionnaire de Comptes</h1>
+    <p>Cette page vous permet de gérer vos comptes bancaires.</p>
+    <p>Vous pouvez ajouter, modifier ou supprimer des comptes.</p>
+    <p>Pour ajouter un compte, cliquez sur le bouton ci-dessous.</p>
+    <a href="{{ path('km_accForm', {'id': 0}) }}" class="btn btn-primary">Ajouter un compte</a>
+  </div>
+{% endblock %}

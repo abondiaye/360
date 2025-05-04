@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Admin{% endblock %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    {% endblock %}
+    
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Tableau de bord - GeniusPro360°</h1>
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Projets</h5>
+                    <p class="display-4 text-primary">{{ project_count }}</p>
+                    <a href="{{ path('admin_projects') }}" class="btn btn-outline-primary btn-sm">Voir les projets</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Clients</h5>
+                    <p class="display-4 text-success">{{ client_count }}</p>
+                    <a href="{{ path('admin_clients') }}" class="btn btn-outline-success btn-sm">Voir les clients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Factures</h5>
+                    <p class="display-4 text-danger">{{ invoice_count }}</p>
+                    <a href="{{ path('admin_invoices') }}" class="btn btn-outline-danger btn-sm">Voir les factures</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <!-- Déplacer ici le bouton retour au site -->
+        <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark">
+            Retour au site
+        </a>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Statistiques mensuelles</h5>
+                    <canvas id="statsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const data = {
+            labels: ['Janvier', 'Février', 'Mars', 'Avril'],
+            datasets: [
+                {
+                    label: 'Projets',
+                    data: [2, 3, 4, 6],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Clients',
+                    data: [1, 2, 3, 4],
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Factures',
+                    data: [0, 1, 2, 3],
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        };
+
+        new Chart(document.getElementById('statsChart'), {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Évolution des projets, clients et factures'
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}
+    <footer class="text-center mt-5">
+        <p>&copy; {{ "now"|date("Y") }} GeniusPro360° - Tous droits réservés</p>
+    </footer>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'InoKontoManager.html.twig' %}
+  {% block body %}
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-md-4 col-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="card-title h3">Aperçu de la Base de Données</div>
+          <table class="table table-sm">
+          <tbody>
+          <tr>
+            <td>Nombre d'enregistrements :</td>
+            <td>{{TOTAL_STATS['TOTAL_ROWS']|format_number(locale='fr')}} </td>
+          </tr>
+          <tr>
+            <td>Période :</td>
+            <td>{{TOTAL_STATS['MIN_DATE']|date('d.m.Y')}} - {{ TOTAL_STATS['MAX_DATE']|date('d.m.Y') }}</td>
+          </tr>
+          <tr>
+            <td>Nombre de catégories :</td>
+            <td>{{TOTAL_STATS['TOTAL_CATEGORIES']|format_number(locale='fr')}} </td>
+          </tr>
+          <tr>
+            <td>Nombre de filtres d'import :</td>
+            <td>{{TOTAL_STATS['TOTAL_FILTER']|format_number(locale='fr')}} </td>
+          </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-md-4 col-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="card-title h3">Revenus {{ YEAR }}</div>
+          <table class="table table-sm">
+            <tbody>
+            <tr>
+              <td>Revenus :</td>
+              <td class="text-end text-success">{{YEAR_STATS['INCOME']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            <tr>
+              <td>Dépenses :</td>
+              <td class="text-end text-danger">{{ YEAR_STATS['OUTCOME']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            <tr>
+              <td>Différence :</td>
+              <td class="text-end {{ YEAR_STATS['DIFFERENCE']|MoneyColor }}">{{ YEAR_STATS['DIFFERENCE']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            {% if BALANCE_STATS['balance'] is defined %}
+            <tr>
+              <td>Solde au {{ BALANCE_STATS['balance_date']|date('d.m.Y') }} :</td>
+              <td class="text-end {{ BALANCE_STATS['balance']|MoneyColor }}">{{ BALANCE_STATS['balance']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-md-4 col-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="card-title h3">Revenus Totaux</div>
+          <table class="table table-sm">
+            <tbody>
+            <tr>
+              <td>Revenus :</td>
+              <td class="text-end text-success">{{ALLTIME_STATS['INCOME']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            <tr>
+              <td>Dépenses :</td>
+              <td class="text-end text-danger">{{ ALLTIME_STATS['OUTCOME']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            <tr>
+              <td>Différence :</td>
+              <td class="text-end {{ ALLTIME_STATS['DIFFERENCE']|MoneyColor }}">{{ ALLTIME_STATS['DIFFERENCE']|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            <tr>
+              <td>Revenus salariaux uniquement :</td>
+              <td class="text-end text-success">{{ TOTAL_GEHALT|format_currency('EUR',locale='fr')}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="card-title h3 text-center">Évolution du Salaire Net</div>
+          <canvas id="myChart" width="100%" height="20"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  {% block javascripts %}
+  <script src="{{ asset('js/vendor/chart.umd.js') }}"></script>
+  <script>
+  $(document).ready(function() {
+    const ctx = $('#myChart');
+    const labels = {{ G_LABELS|raw }};
+    const values = {{ G_VALUES|raw }};
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Salaire net annuel en EUR',
+          data: values,
+          borderColor: 'rgb(50, 61, 83)',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        locale: 'fr-FR',
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context)
+                {
+                let label = context.dataset.label || '';
+                if (label)
+                  {
+                  label += ': ';
+                  }
+                if (context.parsed.y !== null)
+                  {
+                  label += new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR'
+                    }).format(context.parsed.y);
+                    }
+                  return label;
+                }
+              }
+            }
+          },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+  </script>
+  {% endblock %}
+  

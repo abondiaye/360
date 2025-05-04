@@ -1,0 +1,92 @@
+{% extends 'InoFreelancerManager.html.twig' %}
+
+  {% block body %}
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active h3" aria-current="page">
+            <i class="fa-solid fa-user-group fa-fw"></i> Clients
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="row mb-2">
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path("fl_customer_form") }}'">
+        <i class="fa-solid fa-user-plus"></i> Ajouter un nouveau client
+      </button>
+    </div>
+    <div class="col-auto">
+      <select name="F_ACTIVE" id="f_active" class="form-select">
+        <option value="">Afficher tous</option>
+        <option value="1" {% if F_ACTIVE == "1" %}selected{% endif %}>Clients actifs uniquement</option>
+        <option value="0" {% if F_ACTIVE == "0" %}selected{% endif %}>Clients inactifs uniquement</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12 table-responsive">
+      <table class="table table-sm table-striped table-hover" id="tbl_fl_customer">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Numéro client</th>
+            <th>Entreprise</th>
+            <th>Contact</th>
+            <th>Adresse e-mail</th>
+            <th>Téléphone</th>
+            <th class="text-center">Actif ?</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endblock %}
+  
+  {% block javascripts %}
+  <script>
+  var formurl = "{{ path("fl_customer_form") }}";
+  
+  var dtable  = $("#tbl_fl_customer").DataTable({
+    columnDefs: [
+      { className: "td_edit", targets: [0,1,2,3,4] },
+      { className: "td_edit text-center", targets: [6] }
+    ],
+    "processing": true,
+    "serverSide": true,
+    ajax: {
+      url: '{{ path("fl_customer_ajax") }}',
+      "data": function (d) {
+        d.F_ACTIVE = $('#f_active').val();
+      }
+    },
+    "stateSave": true,
+    "stateDuration": 0,
+    "fnInitComplete": function() {
+      this.fnAdjustColumnSizing(true);
+    },
+  });
+  
+  // Gérer le clic sur une cellule
+  $('#tbl_fl_customer tbody').on('click', 'td', function () {
+    var data = dtable.cell(this).data();
+    if (Array.isArray(data) === true) {
+      return;
+    }
+    var row = dtable.row(dtable.cell(this).index().row).data();
+    window.location.href = formurl + "/" + row[0];
+  });
+  
+  // Réagir au changement du filtre "actif"
+  $("#f_active").on('change', function() {
+    dtable.ajax.reload(null, false);
+  });
+  </script>
+  {% endblock %}
+  
