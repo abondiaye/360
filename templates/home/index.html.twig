@@ -1,35 +1,145 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GeniusPro360°{% endblock %}
+{% block title %}Accueil - GeniusPro360°{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <style>
+        .navbar-custom {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .navbar-custom a {
+            color: #facc15;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar-custom a:hover {
+            color: #ffffff;
+        }
+
+        .swiper {
+            width: 100%;
+            padding: 4rem 0;
+        }
+
+        .swiper-slide {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .slide-wrapper {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .slide-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .slide-wrapper:hover img {
+            transform: scale(1.1);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 0.75rem;
+            text-align: center;
+            background: rgba(122, 125, 131, 0);
+            color: #facc15;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+        }
+
+        .slide-wrapper:hover .slide-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    <section class="hero text-center">
-        <h1>Bienvenue sur GeniusPro360°</h1>
-        <p>Technicien Freelance en Informatique</p>
-        <div class="mt-4">
-            <a href="{{ path('admin_login') }}" class="btn btn-primary">Connexion Admin</a>
-            <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark">Voir mon portfolio</a>
-            <a href="{{ path('homepage') }}" class="btn btn-secondary">Visiter le site</a>
-        </div>
+<div class="content-wrapper">
+    <nav class="navbar-custom">
+        <a href="{{ path('homepage') }}">Accueil</a>
+        <a href="{{ path('services') }}">Services</a>
+        <a href="{{ path('blog_index') }}">Blog</a>
+        <a href="{{ path('contact') }}">Contact</a>
+    </nav>
 
-        <div class="mt-5">
-            <a href="{{ path('portfolio_index') }}" class="btn btn-outline-dark mb-3">
-                Retour au site
-            </a>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            {% set slides = [
+                {'src': 'diagnostic.jpg', 'alt': 'Diagnostic PC'},
+                {'src': 'ai.jpg', 'alt': 'Assistance IA'},
+                {'src': 'cybersecurite.jpeg', 'alt': 'Cybersécurité'},
+                {'src': 'support.jpg', 'alt': 'Support à distance'},
+                {'src': 'formation.jpg', 'alt': 'Formation TI'}
+            ] %}
+            {% for slide in slides %}
+                <div class="swiper-slide">
+                    <a href="{{ path('services') }}">
+                        <div class="slide-wrapper">
+                            <img src="{{ asset('images/' ~ slide.src) }}" alt="{{ slide.alt }}">
+                            <div class="slide-caption">{{ slide.alt }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/home.js') }}"></script>
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper('.swiper', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                }
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block footer %}
     <footer>
-        <p>&copy; 2023 GeniusPro360° - Tous droits réservés</p>
+        <p style="text-align: center; padding: 1rem; color: #facc15;">&copy; 2023 GeniusPro360°. Tous droits réservés.</p>
     </footer>
 {% endblock %}

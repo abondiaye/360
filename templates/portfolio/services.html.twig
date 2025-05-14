@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Services - GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .services-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 2rem;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
+        }
+
+        .service-card h3 {
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="services-container">
+        <div class="service-card">
+            <h3>Diagnostic Informatique</h3>
+            <p>Analyse rapide et précise de l’état de votre ordinateur : performances, erreurs système, virus et matériel.</p>
+        </div>
+        <div class="service-card">
+            <h3>Assistance IA</h3>
+            <p>Utilisation de l’intelligence artificielle pour détecter, anticiper et résoudre des problèmes techniques.</p>
+        </div>
+        <div class="service-card">
+            <h3>Sécurité Informatique</h3>
+            <p>Protection avancée de vos données : antivirus, pare-feu, sauvegarde, surveillance et audits de sécurité.</p>
+        </div>
+        <div class="service-card">
+            <h3>Support à distance</h3>
+            <p>Prise en main à distance pour résoudre vos soucis informatiques sans déplacement.</p>
+        </div>
+        <div class="service-card">
+            <h3>Formations TI</h3>
+            <p>Sensibilisation à la cybersécurité, apprentissage des outils bureautiques, et accompagnement personnalisé.</p>
+        </div>
+    </section>
+    <div style="text-align: center; margin-top: 2rem;">
+    <a href="{{ path('homepage') }}"
+       style="background-color: #facc15; color: #1e293b; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background-color 0.3s;">
+        ⬅ Retour à l'accueil
+    </a>
+</div>
+
+{% endblock %}

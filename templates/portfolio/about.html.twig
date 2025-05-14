@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos - GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+    }
+    .about-section {
+        max-width: 900px;
+        margin: 4rem auto;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        padding: 3rem;
+        color: #fff;
+        text-align: center;
+    }
+    .about-section h1 {
+        font-size: 2.5rem;
+        color: #facc15;
+        margin-bottom: 1.5rem;
+    }
+    .about-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        border-radius: 12px;
+        backdrop-filter: blur(6px);
+        transition: transform 0.3s ease;
+    }
+    .about-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px #facc15;
+    }
+    .about-card h2 {
+        color: #facc15;
+        margin-bottom: 0.5rem;
+    }
+    .buzz-light {
+        font-style: italic;
+        color: #9f01ea;
+        margin-top: 2rem;
+        animation: flicker 1.5s infinite alternate;
+    }
+    @keyframes flicker {
+        from { opacity: 1; }
+        to { opacity: 0.6; }
+    }
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+        text-align: left;
+    }
+    .timeline-item {
+        background: rgba(255,255,255,0.05);
+        padding: 1rem;
+        border-left: 4px solid #facc15;
+        border-radius: 4px;
+    }
+    .competences {
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="about-section">
+    <h1>Qui suis-je ?</h1>
+    <p>Je m'appelle Abdoulaye N'diaye. Après un parcours dans le secteur du transport et de la restauration, j’ai décidé de me reconvertir dans l'informatique, un domaine qui me passionne profondément.</p>
+
+    <p>Je travaille aujourd’hui comme <strong>indépendant</strong> en support informatique et développement web. En parallèle, je m'engage comme <strong>bénévole auprès de l'association SIF</strong> pour apporter mon aide aux plus démunis.</p>
+
+    <div class="competences">
+        💻 Support informatique
+        🛠 Maintenance préventive
+        🧠 Diagnostic assisté par IA
+        🌐 Développement Symfony / Vue.js
+        🧑‍🏫 Formation utilisateurs
+    </div>
+
+    <h2 style="color: #facc15; margin-top: 3rem;">Mon parcours de formation</h2>
+    <div class="timeline">
+        <div class="timeline-item">🎓 CAP Cuisine (2002)</div>
+        <div class="timeline-item">🎓 Mention Complémentaire Traiteur (2003)</div>
+        <div class="timeline-item">🎓 BAC Transport et Accueil (2005)</div>
+        <div class="timeline-item">🎓 BTS TSSR - Technicien Supérieur Systèmes et Réseaux(2018)</div>
+        <div class="timeline-item">🎓 Développeur Web Full-Stack BAC+3 (2023)</div>
+    </div>
+
+    <p class="buzz-light">Vers l'infini et au-delà ✨ – avec GeniusPro360°</p>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

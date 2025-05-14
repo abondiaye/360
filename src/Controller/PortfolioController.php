@@ -13,4 +13,40 @@ class PortfolioController extends AbstractController
     {
         return $this->render('portfolio/index.html.twig');
     }
+
+    #[Route('/about', name: 'about')]
+    public function about(): Response
+    {
+        return $this->render('portfolio/about.html.twig');
+    }
+
+    #[Route('/services', name: 'services')]
+    public function services(): Response
+    {
+        return $this->render('portfolio/services.html.twig');
+    }
+
+    #[Route('/blog', name: 'blog')]
+    public function blog(): Response
+    {
+        return $this->render('portfolio/blog.html.twig');
+    }
+
+    #[Route('/formations', name: 'formations')]
+    public function formations(): Response
+    {
+        return $this->render('portfolio/formations.html.twig');
+    }
+
+    #[Route('/contact', name: 'contact')]
+    public function contact(): Response
+    {
+        return $this->render('portfolio/contact.html.twig');
+    }
+
+    #[Route('/training', name: 'training')]
+    public function training(): Response
+    {
+        return $this->render('portfolio/training.html.twig');
+    }
 }

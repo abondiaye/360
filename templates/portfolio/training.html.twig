@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parcours & Diplômes - GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.clip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 3rem;
+    background-color: #0f172a;
+}
+.clip-card {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(215, 204, 204, 0.83);
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+.clip-card:hover {
+    transform: scale(1.05);
+}
+.clip-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    filter: brightness(0.9);
+}
+.clip-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.6) blur(1px);
+}
+.clip-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15,23,42,0.85);
+    color: #facc15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    backdrop-filter: blur(2px);
+}
+.clip-card:hover .clip-overlay {
+    opacity: 1;
+}
+.clip-overlay i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #facc15;
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+<h1 style="text-align:center; color: #facc15; margin-top: 2rem;">Mes diplômes et expériences</h1>
+<div class="clip-grid">
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/cuisine.jpg') }}" alt="CAP Cuisine">
+        <div class="clip-overlay">
+            <i class="fas fa-utensils"></i>
+            CAP Cuisine
+        </div>
+    </div>
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/traiteur.jpg') }}" alt="Traiteur">
+        <div class="clip-overlay">
+            <i class="fas fa-hat-chef"></i>
+            Mention Complémentaire Traiteur
+        </div>
+    </div>
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/accueil-routier.jpg') }}" alt="BAC accueil">
+        <div class="clip-overlay">
+            <i class="fas fa-bus"></i>
+            BAC Accueil & Conduite Routière
+        </div>
+    </div>
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/transports.jpg') }}" alt="Expérience">
+        <div class="clip-overlay">
+            <i class="fas fa-road"></i>
+            Expérience : TCL, Veolia, Keolis, Philibert<br/>Lignes urbaines, cars scolaires, tourisme, remplacement TER
+        </div>
+    </div>
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/informatique.jpg') }}" alt="Informatique">
+        <div class="clip-overlay">
+            <i class="fas fa-desktop"></i>
+            BTS TSSR - Technicien Supérieur Systèmes et Réseaux
+        </div>
+    </div>
+    <div class="clip-card">
+        <img src="{{ asset('images/diplomes/devweb.jpg') }}" alt="Dev Web">
+        <div class="clip-overlay">
+            <i class="fas fa-code"></i>
+            BAC+3 Développeur Web Full-Stack
+        </div>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ path('homepage') }}"
+               style="background-color: #facc15; color: #1e293b; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background-color 0.3s;">
+                ⬅ Retour à l'accueil
+            </a>
+        </div>
+{% endblock %}

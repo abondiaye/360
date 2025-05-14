@@ -1,0 +1,40 @@
+{# templates/portfolio/training.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations - GeniusPro360°{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('training') }}
+{% endblock %}
+
+{% block body %}
+<section class="training-section">
+    <h1>Nos Formations</h1>
+    <p>GeniusPro360° vous propose des formations pratiques et adaptées pour renforcer vos compétences informatiques, quel que soit votre niveau.</p>
+
+    <div class="training-cards">
+        <div class="training-card">
+            <h3>Débuter avec l'informatique</h3>
+            <p>Apprenez les bases : navigation, bureautique, sécurité et plus encore.</p>
+        </div>
+        <div class="training-card">
+            <h3>Maintenance & Réparation</h3>
+            <p>Identifiez et réparez les pannes matérielles et logicielles courantes.</p>
+        </div>
+        <div class="training-card">
+            <h3>Développement Web</h3>
+            <p>Initiez-vous à HTML, CSS, JavaScript et créez vos premiers sites.</p>
+        </div>
+        <div class="training-card">
+            <h3>Cybersécurité</h3>
+            <p>Protégez vos données et apprenez les bons réflexes numériques.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('training') }}
+{% endblock %}
