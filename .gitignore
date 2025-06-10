@@ -1,24 +1,44 @@
-# .gitignore
-
-# Fichiers Symfony
+# --- Symfony ---
 /var/
 /vendor/
 /.env
 .env.local
 .env.*.local
+/public/bundles/
+/config/secrets/prod/prod.decrypt.private.php
 
-# Node & JS
-/node_modules/
+# --- Webpack Encore (assets compilés) ---
 /public/build/
 /public/hot
 /build/
 
-# macOS
-.DS_Store
+# --- Node.js ---
+/node_modules/
+/npm-debug.log*
 
-# Logs
+# --- Logs ---
 *.log
+*.cache
 
-# IDEs
+# --- Tests ---
+/phpunit.xml
+/phpunit.xml.dist
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- IDEs & éditeurs ---
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Autres fichiers à ignorer ---
+*.swp
+*.bak
+*.tmp
+*.old
+*.orig
+
