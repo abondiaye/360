@@ -1,84 +1,133 @@
-# GenuisPro360° - Toolkit of private tools for freelancer management and managing private bank accounts
+# GeniusPro360° – Outils privés pour freelances et gestion de comptes bancaires
 
-## What is this?
+## 🔍 Qu'est-ce que c'est ?
 
-If you are working as freelancer you have to manage your customer, invoices and other stuff.
-Of course there are plenty of tools out there to help you managing your daily business, however I always
-prefer to have my own software in place, so here it is: GenuisPro360°
+**GeniusPro360°** est une suite d'outils destinée aux freelances pour gérer efficacement leur activité : clients, projets, factures, et même les comptes bancaires personnels.
 
-## Features
+Il existe bien sûr de nombreux outils déjà disponibles, mais j’ai préféré concevoir ma propre solution sur mesure.
 
-### Freelancer Manager
+---
 
-- Manage your customer
-- Manage your projects
-- Manage your time sheets
-- Extensive reporting
-- Supports service contracts
-- PDF reporting
+## ✨ Fonctionnalités
 
-### Bank Accounting Manager 
+### Gestion de freelance
 
-- Supports multiple banking accounts
-- Imports Deutsche Bank and Targobank CSV files
-- Auto-assignment of repetive accounting data
-- Extensive reporting
+- Gestion des clients
+- Gestion des projets
+- Suivi des feuilles de temps
+- Rapports détaillés
+- Support des contrats de service
+- Génération de rapports PDF
 
+### Gestion de comptes bancaires
 
-## Installation
+- Gestion de plusieurs comptes bancaires
+- Import de fichiers CSV (Deutsche Bank, Targobank)
+- Attribution automatique des écritures récurrentes
+- Rapports financiers détaillés
 
-Make sure to meet the requirements:
+---
 
-- PHP 8.1 or newer - lower versions are not supported!
-- PostgreSQL 12.x or newer - tested with PgSql 14.5
-- Modern browser (see https://getbootstrap.com/docs/5.2/getting-started/browsers-devices/)
+## 🛠️ Installation
 
-If you have already the symfony binary on your system, check your system with:
+### Prérequis
 
-`symfony check:requirements`
+- PHP 8.1 ou plus récent
+- PostgreSQL 12.x ou plus récent (testé avec PgSQL 14.5)
+- Navigateur moderne ([compatibilité Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/browsers-devices/))
 
-### install copy from gitHub to your work space:
+Vérifie la configuration système avec Symfony :
 
-1. `git clone https://github.com/SieGeL2k16/GenuisPro360°.git`
+```bash
+symfony check:requirements
+Clonage depuis GitHub
+bash
+Copier
+Modifier
+git clone git@github.com:abondiaye/360.git
+cd 360
+composer install
+🗄️ Configuration de la base de données
+Connexion en tant que postgres :
 
-2. Install composer packages:
-   `composer install`
+bash
+Copier
+Modifier
+su - postgres
+psql
+Création de l'utilisateur et de la base :
 
-### Setup Database
+sql
+Copier
+Modifier
+CREATE ROLE geniuspro LOGIN CREATEDB PASSWORD 'genius2025';
+CREATE DATABASE geniuspro OWNER geniuspro;
+⚙️ Configuration Symfony / GeniusPro360°
+Créer un fichier .env.local à la racine du projet avec :
 
-Create a new database user and database for GenuisPro360°, i.e.:
-
-1. `su - postgres`
-2. `psql`
-3. `postgres=# CREATE ROLE GenuisPro360° LOGIN CREATEDB PASSWORD 'GenuisPro360°2k21';`
-4. `postgres=# CREATE DATABASE GenuisPro360° OWNER GenuisPro360°;`
-
-## Configure Symfony / GenuisPro360°
-
-#### Create `.env.local` file in Symfony root directory and takeover the following variables:
-```
+env
+Copier
+Modifier
 APP_ENV=prod
-DATABASE_URL=postgresql://GenuisPro360°:GenuisPro360°2k21@127.0.0.1:5432/GenuisPro360°?serverVersion=14&charset=utf8
-```
-Please refer to the supplied `.env` file for a description of these variables.
+DATABASE_URL=postgresql://geniuspro:genius2025@127.0.0.1:5432/geniuspro?serverVersion=14&charset=utf8
+Puis exécute la migration :
 
-#### Create database structure from Symfony:
+bash
+Copier
+Modifier
+bin/console doctrine:migrations:migrate
+Ajouter un utilisateur :
 
-`bin/console doctrine:migrations:migrate`
+bash
+Copier
+Modifier
+bin/console app:user
+Lance le projet dans ton navigateur en pointant vers le dossier public.
 
-#### Add a user to work with the application:
+📦 Technologies et bibliothèques utilisées
+Symfony 6.x
 
-`bin/console app:user`
+Bootstrap 5.x
 
-####  Use your webbrowser to call the application (public is webdirectory!)
+FontAwesome 6.x
 
+jQuery 3.6
 
-## Frameworks and third-party libraries used
+Chart.js
 
-- Symfony 6.x (https://symfony.com/)
-- Bootstrap 5.x (https://getbootstrap.com/)
-- FontAwesome 6.x (https://fontawesome.com/v6.0/icons)
-- jQuery 3.6.x (https://jquery.com/)
-- Chart.js (https://www.chartjs.org)
-- TCPDF 6.5.0 (http://www.tcpdf.org)
-- Luxon (https://moment.github.io/luxon/)
+TCPDF
+
+Luxon
+
+👤 Auteur
+Abdoulaye N'diaye
+Développeur full-stack & technicien IT
+📧 a_ndiaye@outlook.com
+🔗 https://github.com/abondiaye
+
+📜 Licence
+Ce projet est publié sous licence MIT – libre d’utilisation et de modification.
+
+yaml
+Copier
+Modifier
+
+---
+
+### ✅ Pour l’enregistrer :
+
+1. Ouvre le fichier :
+   ```bash
+   nano README.md
+Colle tout le contenu ci-dessus
+
+Enregistre avec Ctrl + O, puis Entrée, puis quitte avec Ctrl + X
+
+Envoie-le sur GitHub :
+
+bash
+Copier
+Modifier
+git add README.md
+git commit -m "Ajout du README en français"
+git push origin main
