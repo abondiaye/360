@@ -1,0 +1,21 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[3]!./assets/scss/services.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+.page-section {
+  padding: 60px 20px;
+  background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+  text-align: center;
+}
+.page-section h1 {
+  color: #2b2d42;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+.page-section p {
+  color: #4a4a4a;
+  font-size: 1.125rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VydmljZXMuY3NzIiwibWFwcGluZ3MiOiI7OztBQUdBO0VBQ0k7RUFDQTtFQUNBO0FBRko7QUFJSTtFQUNFO0VBQ0E7RUFDQTtBQUZOO0FBS0k7RUFDRTtFQUNBO0VBQ0E7RUFDQTtBQUhOLEMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9hc3NldHMvc2Nzcy9zZXJ2aWNlcy5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIlxuLy8gYXNzZXRzL3Njc3Mvc2VydmljZXMuc2Nzc1xuXG4ucGFnZS1zZWN0aW9uIHtcbiAgICBwYWRkaW5nOiA2MHB4IDIwcHg7XG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KHRvIHJpZ2h0LCAjZjBmNGY4LCAjZDllMmVjKTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIFxuICAgIGgxIHtcbiAgICAgIGNvbG9yOiAjMmIyZDQyO1xuICAgICAgZm9udC1zaXplOiAyLjVyZW07XG4gICAgICBtYXJnaW4tYm90dG9tOiAyMHB4O1xuICAgIH1cbiAgXG4gICAgcCB7XG4gICAgICBjb2xvcjogIzRhNGE0YTtcbiAgICAgIGZvbnQtc2l6ZTogMS4xMjVyZW07XG4gICAgICBtYXgtd2lkdGg6IDcwMHB4O1xuICAgICAgbWFyZ2luOiAwIGF1dG87XG4gICAgfVxuICB9XG4gICJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==*/

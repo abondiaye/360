@@ -1,0 +1,22 @@
+{
+  "build/app.css": "/build/app.css",
+  "build/app.js": "/build/app.js",
+  "build/home.css": "/build/home.css",
+  "build/home.js": "/build/home.js",
+  "build/about.css": "/build/about.css",
+  "build/about.js": "/build/about.js",
+  "build/services.css": "/build/services.css",
+  "build/services.js": "/build/services.js",
+  "build/blog.css": "/build/blog.css",
+  "build/blog.js": "/build/blog.js",
+  "build/formations.css": "/build/formations.css",
+  "build/formations.js": "/build/formations.js",
+  "build/contact.css": "/build/contact.css",
+  "build/contact.js": "/build/contact.js",
+  "build/training.css": "/build/training.css",
+  "build/training.js": "/build/training.js",
+  "build/footer_light.css": "/build/footer_light.css",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors-node_modules_swiper_swiper-bundle_css-node_modules_swiper_swiper-bundle_mjs.css": "/build/vendors-node_modules_swiper_swiper-bundle_css-node_modules_swiper_swiper-bundle_mjs.css",
+  "build/vendors-node_modules_swiper_swiper-bundle_css-node_modules_swiper_swiper-bundle_mjs.js": "/build/vendors-node_modules_swiper_swiper-bundle_css-node_modules_swiper_swiper-bundle_mjs.js"
+}

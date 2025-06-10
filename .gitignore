@@ -1,1 +1,24 @@
-.DS_Store\nvendor/\n.env\nnode_modules/
+# .gitignore
+
+# Fichiers Symfony
+/var/
+/vendor/
+/.env
+.env.local
+.env.*.local
+
+# Node & JS
+/node_modules/
+/public/build/
+/public/hot
+/build/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
