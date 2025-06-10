@@ -1,0 +1,45 @@
+.member-dashboard {
+    text-align: center;
+    padding: 2rem;
+    background: radial-gradient(circle, #000 0%, #111 100%);
+    color: #FFD700;
+  
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .dashboard-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+  
+      .dashboard-card {
+        background: #222;
+        border: 1px solid #FFD700;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+        color: #FFD700;
+        text-decoration: none;
+  
+        &:hover {
+          background-color: #FFD700;
+          color: #000;
+          transform: scale(1.05);
+        }
+  
+        &.logout {
+          background: #700;
+          border-color: #f00;
+  
+          &:hover {
+            background: #f00;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  

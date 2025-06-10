@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace Membre - GeniusPro 360°{% endblock %}
+
+{% block body %}
+<div class="dashboard-container">
+    <h1>Bienvenue {{ user.firstName }} 👋</h1>
+
+    {# Section d'accueil pour les nouveaux membres #}
+    <section class="welcome-section">
+        <h2>🎉 Bienvenue dans l’espace membre GeniusPro 360°</h2>
+        <p>Voici comment gagner des points et profiter au maximum :</p>
+        <ul>
+            <li>💡 <strong>Diagnostic automatique :</strong> utilisez-le pour identifier vos problèmes techniques et gagner 5 points par usage.</li>
+            <li>📞 <strong>Appel support :</strong> chaque appel résolu vous donne 10 points.</li>
+            <li>📝 <strong>Lire les articles du blog :</strong> +2 points par article lu entièrement.</li>
+            <li>👥 <strong>Parrainage :</strong> invitez un collègue ou ami = 20 points.</li>
+        </ul>
+
+        <p class="mt-3">🎯 <strong>Objectif :</strong> Atteignez 100 points pour une assistance prioritaire gratuite 💎 !</p>
+    </section>
+
+    {# Cartes principales #}
+    <div class="dashboard-cards mt-4">
+        <a href="{{ path('support_calls_user') }}" class="card">📞 Mes supports</a>
+        <a href="{{ path('automated_diagnostics_user') }}" class="card">🧠 Mes diagnostics</a>
+        <a href="{{ path('blog') }}" class="card">📚 Blog technique</a>
+        <a href="{{ path('logout') }}" class="card danger">🚪 Déconnexion</a>
+    </div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #343a40;
+        }
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+        .dashboard-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .card {
+            flex: 1 1 calc(50% - 1rem);
+            padding: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #343a40;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .card.danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Vous pouvez ajouter des scripts spécifiques ici si nécessaire
+    </script>
+{% endblock %}

@@ -18,6 +18,8 @@ Encore
     .addEntry('formations', './assets/js/formations.js')     // Page Formations
     .addEntry('contact', './assets/js/contact.js')           // Page Contact
     .addEntry('training', './assets/js/training.js')
+    .addStyleEntry('footer_light', './assets/scss/footer_light.scss')
+    
 
     // ⚙️ Optimisations
     .splitEntryChunks()

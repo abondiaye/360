@@ -1,107 +1,179 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}À propos - GeniusPro360°{% endblock %}
+{% block title %}À propos | GeniusPro360°{% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
-    }
-    .about-section {
-        max-width: 900px;
-        margin: 4rem auto;
-        background-color: rgba(255,255,255,0.1);
-        border-radius: 16px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        padding: 3rem;
-        color: #fff;
-        text-align: center;
-    }
-    .about-section h1 {
-        font-size: 2.5rem;
-        color: #facc15;
-        margin-bottom: 1.5rem;
-    }
-    .about-card {
-        background-color: rgba(255, 255, 255, 0.05);
-        margin: 1.5rem auto;
-        padding: 1.5rem;
-        border-radius: 12px;
-        backdrop-filter: blur(6px);
-        transition: transform 0.3s ease;
-    }
-    .about-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px #facc15;
-    }
-    .about-card h2 {
-        color: #facc15;
-        margin-bottom: 0.5rem;
-    }
-    .buzz-light {
-        font-style: italic;
-        color: #9f01ea;
-        margin-top: 2rem;
-        animation: flicker 1.5s infinite alternate;
-    }
-    @keyframes flicker {
-        from { opacity: 1; }
-        to { opacity: 0.6; }
-    }
-    .timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 2rem;
-        text-align: left;
-    }
-    .timeline-item {
-        background: rgba(255,255,255,0.05);
-        padding: 1rem;
-        border-left: 4px solid #facc15;
-        border-radius: 4px;
-    }
-    .competences {
-        margin-top: 2rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-        font-size: 1.2rem;
-    }
-</style>
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(120deg, #0f172a, #1e293b);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(250, 204, 21, 0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        .about-hero {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            padding: 4rem 2rem;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .about-hero img {
+            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+            box-shadow: 0 0 40px rgba(250, 204, 21, 0.6);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(250, 204, 21, 0.8); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-section {
+            padding: 4rem 2rem;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .about-section h2 {
+            color: #facc15;
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px #facc15, 0 0 20px #facc15;
+        }
+
+        .about-section h2::after {
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: #facc15;
+            left: 0;
+            bottom: -8px;
+        }
+
+        .btn-contact {
+            background: linear-gradient(90deg, #facc15, #fde68a);
+            color: #1e293b;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.5);
+        }
+
+        .btn-contact:hover {
+            background: linear-gradient(90deg, #fde68a, #facc15);
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+            transform: scale(1.05);
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-<div class="about-section">
-    <h1>Qui suis-je ?</h1>
-    <p>Je m'appelle Abdoulaye N'diaye. Après un parcours dans le secteur du transport et de la restauration, j’ai décidé de me reconvertir dans l'informatique, un domaine qui me passionne profondément.</p>
+<div class="glow-bg"></div>
 
-    <p>Je travaille aujourd’hui comme <strong>indépendant</strong> en support informatique et développement web. En parallèle, je m'engage comme <strong>bénévole auprès de l'association SIF</strong> pour apporter mon aide aux plus démunis.</p>
+<section class="about-hero">
+    <img src="{{ asset('images/profile.png') }}" alt="Abdoulaye N'diaye - GeniusPro360°">
+    <h1 class="display-5 fw-bold">Hello, moi c’est Abdoulaye 👋</h1>
+    <p class="lead mt-3">Freelance IT | Technicien Réseau & Développeur Web Symfony / Vue.js</p>
+</section>
 
-    <div class="competences">
-        💻 Support informatique
-        🛠 Maintenance préventive
-        🧠 Diagnostic assisté par IA
-        🌐 Développement Symfony / Vue.js
-        🧑‍🏫 Formation utilisateurs
+<section class="about-section">
+    <div class="container max-w-4xl mx-auto space-y-5">
+
+        <p data-aos="fade-up">
+            Passionné par la technologie depuis toujours, j’ai décidé de combiner mes deux forces :
+            <strong>le support informatique</strong> et le <strong>développement web</strong>.
+            Mon but ? Offrir à mes clients des solutions fiables, performantes et humaines.
+        </p>
+
+        <div data-aos="fade-right">
+            <h2 class="h4 fw-bold">🛠 Technicien Réseau</h2>
+            <p>
+                J’interviens sur site ou à distance pour configurer vos équipements : routeurs, switchs, serveurs, NAS, sécurité, etc.
+                Je garantis stabilité, sécurité et accompagnement personnalisé.
+            </p>
+        </div>
+
+        <div data-aos="fade-left">
+            <h2 class="h4 fw-bold">💻 Développeur Web</h2>
+            <p>
+                J’utilise Symfony, Vue.js, SCSS pour créer des sites et plateformes intuitives, rapides et bien sécurisées.
+                J’intègre des dashboards, des API REST, ou même des outils de diagnostic automatisés.
+            </p>
+        </div>
+
+        <div data-aos="fade-up">
+            <h2 class="h4 fw-bold">🔐 CyberOps & Sécurité</h2>
+            <p>
+                Formé aux pratiques de cybersécurité, j’intègre dès le départ les protections nécessaires :
+                rôles, filtrage, validation, anti-injection, audit de code.
+            </p>
+        </div>
+
+        <div data-aos="fade-up">
+            <h2 class="h4 fw-bold">🚀 Mon ADN</h2>
+            <ul class="list-unstyled ms-4">
+                <li>✔ Écoute active et compréhension client</li>
+                <li>✔ Réactivité (SLA rapide sur demande)</li>
+                <li>✔ Curiosité & apprentissage constant</li>
+                <li>✔ Éthique, confidentialité, confiance</li>
+            </ul>
+        </div>
+
+        <div class="mt-4 text-center" data-aos="fade-up">
+            <a href="{{ path('app_register') }}">S'inscrire</a> 
+
+            <a href="{{ path('contact') }}" class="btn-contact">📬 Me contacter</a>
+        </div>
+
     </div>
-
-    <h2 style="color: #facc15; margin-top: 3rem;">Mon parcours de formation</h2>
-    <div class="timeline">
-        <div class="timeline-item">🎓 CAP Cuisine (2002)</div>
-        <div class="timeline-item">🎓 Mention Complémentaire Traiteur (2003)</div>
-        <div class="timeline-item">🎓 BAC Transport et Accueil (2005)</div>
-        <div class="timeline-item">🎓 BTS TSSR - Technicien Supérieur Systèmes et Réseaux(2018)</div>
-        <div class="timeline-item">🎓 Développeur Web Full-Stack BAC+3 (2023)</div>
-    </div>
-
-    <p class="buzz-light">Vers l'infini et au-delà ✨ – avec GeniusPro360°</p>
-</div>
+</section>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
 {% endblock %}

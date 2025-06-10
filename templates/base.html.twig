@@ -25,10 +25,20 @@
             <li class="nav-item"><a href="{{ path('blog') }}" class="nav-link text-white">Blog</a></li>
             <li class="nav-item"><a href="{{ path('training') }}" class="nav-link text-white">Formations</a></li>
             <li class="nav-item"><a href="{{ path('contact') }}" class="nav-link text-white">Contact</a></li>
-        </ul>
+            <li class="nav-item"><a href="{{ path('member_dashboard') }}" class="nav-link text-white">Membres</a></li>
+
+            </ul>
     </nav>
 </header>
+    <a href="{{ path('app_register') }}">S'inscrire</a> 
+    <a href="{{ path('app_login') }}">Se connecter</a>
 
+    {# Main content area #}
+    <div class="glow-bg"></div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 <main>
     {% block body %}{% endblock %}
 </main>

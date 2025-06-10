@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted; // Ajout pour IsGranted
 
 class PortfolioController extends AbstractController
 {
@@ -48,5 +49,14 @@ class PortfolioController extends AbstractController
     public function training(): Response
     {
         return $this->render('portfolio/training.html.twig');
+    }
+
+    #[Route('/mon-espace', name: 'member_dashboard')]
+    #[IsGranted('ROLE_USER')] // Protection d’accès
+    public function memberDashboard(): Response
+    {
+        return $this->render('portfolio/member_dashboard.html.twig', [
+            'user' => $this->getUser(),
+        ]);
     }
 }
